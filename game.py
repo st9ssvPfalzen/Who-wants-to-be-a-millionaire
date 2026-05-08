@@ -2,7 +2,7 @@ import streamlit as st
 
 questions = [
     {"question": "What is the capital of France?",
-     "A": "Paris", "B": "London", "C": "Berlin", "D": "Madrid",
+     "A": "Paris", "B": "Rome", "C": "Berlin", "D": "Madrid",
      "correct": "A", "difficulty": 1},
     {"question": "What is 2 + 2?",
      "A": "3", "B": "4", "C": "5", "D": "6",
