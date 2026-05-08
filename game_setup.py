@@ -80,7 +80,7 @@ def show_setup():
 
         **Lifelines:**
         - 🟡 **Classic:** 3 lifelines — 50:50, Ask the Audience, Phone a Friend
-        - 🔴 **Risky:** 4 lifelines — same as Classic + Switch the Question
+        - 🔴 **Risky:** 4 lifelines — same as Classic + Switch the Question.
         Each lifeline can only be used **once** per game.
 
         **Walk away:** Before answering any question, you can walk away
@@ -141,6 +141,7 @@ def show_setup():
 
 # ─────────────────────────────────────────
 # MAIN — controls which screen is shown
+# WE SHOULD EDIT THIS WHEN WE HAVE THE GAME!!! 
 # ─────────────────────────────────────────
 def main():
     init_state()
