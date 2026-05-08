@@ -1,0 +1,453 @@
+
+[
+    {
+        "question": "Which of the following is not a work authored by Fyodor Dostoevsky?",
+        "A": "The Brothers Karamazov",
+        "B": "Notes from the Underground",
+        "C": "Crime and Punishment",
+        "D": "Anna Karenina",
+        "correct": "D",
+        "difficulty": 2
+    },
+    {
+        "question": "Which of the following Inuit languages was the FIRST to use a unique writing system not based on the Latin alphabet?",
+        "A": "Inupiat",
+        "B": "Greenlandic",
+        "C": "Inuktitut",
+        "D": "Inuinnaqtun",
+        "correct": "C",
+        "difficulty": 3
+    },
+    {
+        "question": "What was the name of the WWF professional wrestling tag team made up of the wrestlers Ax and Smash?",
+        "A": "The Dream Team",
+        "B": "Demolition",
+        "C": "The British Bulldogs",
+        "D": "The Bushwhackers",
+        "correct": "B",
+        "difficulty": 1
+    },
+    {
+        "question": "According to Overwatch's lore, who was once a member of the Deadlock Gang?",
+        "A": "Roadhog",
+        "B": "McCree",
+        "C": "Soldier 76",
+        "D": "Junkrat",
+        "correct": "B",
+        "difficulty": 2
+    },
+    {
+        "question": "What character was once considered to be the 27th letter of the alphabet?",
+        "A": "Interrobang",
+        "B": "Pilcrow",
+        "C": "Tilde",
+        "D": "Ampersand",
+        "correct": "D",
+        "difficulty": 2
+    },
+    {
+        "question": "Which of the following elements is typically used in the doping of the semiconductor silicon?",
+        "A": "Boron",
+        "B": "Iron",
+        "C": "Oxygen",
+        "D": "Carbon",
+        "correct": "A",
+        "difficulty": 3
+    },
+    {
+        "question": "In Terraria, which debuff does the ankh charm not provide immunity to?",
+        "A": "Venom",
+        "B": "Cursed",
+        "C": "Bleeding",
+        "D": "Slow",
+        "correct": "A",
+        "difficulty": 3
+    },
+    {
+        "question": "Which American-owned brewery led the country in sales by volume in 2015?",
+        "A": "Boston Beer Company",
+        "B": "D. G. Yuengling and Son, Inc",
+        "C": "Miller Coors",
+        "D": "Anheuser Busch",
+        "correct": "B",
+        "difficulty": 1
+    },
+    {
+        "question": "Which city is the seat of government of the Netherlands?",
+        "A": "Amsterdam",
+        "B": "Utrecht",
+        "C": "Rotterdam",
+        "D": "The Hague",
+        "correct": "D",
+        "difficulty": 2
+    },
+    {
+        "question": "What is lost in Hawaiian and is also the name of a little girl in a 2002 film which features a alien named \"Stitch\"?",
+        "A": "Lulu",
+        "B": "Lilo",
+        "C": "Lolo",
+        "D": "Lucy",
+        "correct": "B",
+        "difficulty": 1
+    },
+    {
+        "question": "What is another name for La Gioconda / La Joconde?",
+        "A": "The Girl with a Pearl Earring",
+        "B": "Sunflowers",
+        "C": "The Mona Lisa",
+        "D": "The Starry Night",
+        "correct": "C",
+        "difficulty": 1
+    },
+    {
+        "question": "Which artist is famous for cutting off his ear?",
+        "A": "Rembrandt",
+        "B": "Michelangelo",
+        "C": "Vincent van Gogh",
+        "D": "Salvador Dali",
+        "correct": "C",
+        "difficulty": 1
+    },
+    {
+        "question": "In what Homestuck Update was [S] Game Over released?",
+        "A": "April 8th, 2012",
+        "B": "April 13th, 2009",
+        "C": "August 28th, 2003",
+        "D": "October 25th, 2014",
+        "correct": "D",
+        "difficulty": 3
+    },
+    {
+        "question": "Who is the main character in most of the games of the YS series?",
+        "A": "Adol Christin ",
+        "B": "Estelle Bright",
+        "C": "Roger Wilco",
+        "D": "Character doesn't have a name",
+        "correct": "A",
+        "difficulty": 2
+    },
+    {
+        "question": "Who played Baron Victor Frankestein in the 1957 Hammer horror film \"The Curse of Frankenstein\"?",
+        "A": "Vincent Price",
+        "B": "Peter Cushing",
+        "C": "Lon Chaney Jr.",
+        "D": "Boris Karloff",
+        "correct": "B",
+        "difficulty": 2
+    },
+    {
+        "question": "How many playable characters are there in Yakuza 5?",
+        "A": "3",
+        "B": "2",
+        "C": "1",
+        "D": "5",
+        "correct": "D",
+        "difficulty": 1
+    },
+    {
+        "question": "In \"Super Mario Sunshine\", how do you unlock the \"Corona Mountain\" level?",
+        "A": "By unlocking every nozzle F.L.U.D.D can use",
+        "B": "By obtaining 70 Shines",
+        "C": "By clearing every 7th episode",
+        "D": "By clearing every episode involving a \"Secret\"",
+        "correct": "C",
+        "difficulty": 3
+    },
+    {
+        "question": "Before 2011, \"True Capitalist Radio\" was known by a different name. What was that name?",
+        "A": "True Conservative Radio",
+        "B": "True Republican Radio",
+        "C": "United Capitalists",
+        "D": "Texan Capitalist Radio",
+        "correct": "A",
+        "difficulty": 2
+    },
+    {
+        "question": "In \"To Love-Ru\", who is the first to hear of Yami's past from her?",
+        "A": "Lala",
+        "B": "Mikan",
+        "C": "Haruna",
+        "D": "Rito",
+        "correct": "D",
+        "difficulty": 2
+    },
+    {
+        "question": "In the Mario Kart and Smash Bros. Games, Princess Rosalina is considered what weight class?",
+        "A": "Light",
+        "B": "Light-Medium",
+        "C": "Medium",
+        "D": "Heavy",
+        "correct": "D",
+        "difficulty": 2
+    },
+    {
+        "question": "What is the largest organ of the human body?",
+        "A": "Liver",
+        "B": "large Intestine",
+        "C": "Heart",
+        "D": "Skin",
+        "correct": "D",
+        "difficulty": 1
+    },
+    {
+        "question": "Pianist Frédéric Chopin was a composer of which musical era?",
+        "A": "Renaissance",
+        "B": "Classic",
+        "C": "Romantic",
+        "D": "Baroque",
+        "correct": "C",
+        "difficulty": 3
+    },
+    {
+        "question": "What is the same in Celsius and Fahrenheit?",
+        "A": "-40",
+        "B": "-39",
+        "C": "-42",
+        "D": "32",
+        "correct": "A",
+        "difficulty": 3
+    },
+    {
+        "question": "In which \"Call of Duty\" game are the \"Apothicons\" introduced in the Zombies mode?",
+        "A": "Call Of Duty: Black Ops III",
+        "B": "Call Of Duty: World At War",
+        "C": "Call Of Duty: Black Ops II",
+        "D": "Call Of Duty: Black Ops",
+        "correct": "A",
+        "difficulty": 2
+    },
+    {
+        "question": "What was the original name of New York City?",
+        "A": "New Paris",
+        "B": "New Rome",
+        "C": "New Amsterdam",
+        "D": "New London",
+        "correct": "C",
+        "difficulty": 3
+    },
+    {
+        "question": "Who proved Fermat's Last Theorem?",
+        "A": "Carl Friedrich Gauss",
+        "B": "Andrew Wiles",
+        "C": "Leonhard Euler",
+        "D": "Srinivasa Ramanujan",
+        "correct": "B",
+        "difficulty": 1
+    },
+    {
+        "question": "Which mountain has the highest peak in South America?",
+        "A": "Aconcagua, Argentina",
+        "B": "Huascarán, Peru",
+        "C": "Ojos del Salado, Argentina/Chile border",
+        "D": "Monte Pissis, Argentina",
+        "correct": "A",
+        "difficulty": 2
+    },
+    {
+        "question": "Which of these games includes the phrase \"Do not pass Go, do not collect $200\"?",
+        "A": "Pay Day",
+        "B": "Monopoly",
+        "C": "Cluedo",
+        "D": "Coppit",
+        "correct": "B",
+        "difficulty": 1
+    },
+    {
+        "question": "What is the name of the creature that the main character befriends in \"The Last Guardian\"?",
+        "A": "Wolf",
+        "B": "Nico",
+        "C": "Andazi",
+        "D": "Trico",
+        "correct": "D",
+        "difficulty": 2
+    },
+    {
+        "question": "What event inspired The Cranberries song \"Zombie\" ?",
+        "A": "The Manchester Arena Bombing",
+        "B": "The July 7th bombings",
+        "C": "September 11 Attacks",
+        "D": "The Warrington Bombings",
+        "correct": "D",
+        "difficulty": 3
+    },
+    {
+        "question": "List the following Iranic empires in chronological order:",
+        "A": "Achaemenid, Median, Sassanid, Parthian",
+        "B": "Median, Achaemenid, Sassanid, Parthian",
+        "C": "Median, Achaemenid, Parthian, Sassanid",
+        "D": "Achaemenid, Median, Parthian, Sassanid",
+        "correct": "C",
+        "difficulty": 3
+    },
+    {
+        "question": "In the animated series RWBY, what is the name of the weapon used by Weiss Schnee?",
+        "A": "Gambol Shroud",
+        "B": "Ember Celica",
+        "C": "Myrtenaster",
+        "D": "Crescent Rose",
+        "correct": "C",
+        "difficulty": 2
+    },
+    {
+        "question": "In what year was \"Super Mario Sunshine\" released?",
+        "A": "2000",
+        "B": "2003",
+        "C": "2004",
+        "D": "2002",
+        "correct": "D",
+        "difficulty": 2
+    },
+    {
+        "question": "In \"Toriko\", which of the following foods is knowingly compatible with Toriko?",
+        "A": "Alpacookie",
+        "B": "Poison Potato",
+        "C": "Parmesansho Fruit",
+        "D": "Mors Oil",
+        "correct": "B",
+        "difficulty": 2
+    },
+    {
+        "question": "What year did Australia become a federation?",
+        "A": "1910",
+        "B": "1899",
+        "C": "1901",
+        "D": "1911",
+        "correct": "C",
+        "difficulty": 2
+    },
+    {
+        "question": "The “fairy” type made it’s debut in which generation of the Pokemon core series games?",
+        "A": "6th",
+        "B": "7th",
+        "C": "2nd",
+        "D": "4th",
+        "correct": "A",
+        "difficulty": 1
+    },
+    {
+        "question": "In \"The Binding of Isaac\", what is the name of the final boss that you fight in The Void?",
+        "A": "Mega Satan",
+        "B": "Delirium",
+        "C": "The Lamb",
+        "D": "Hush",
+        "correct": "B",
+        "difficulty": 2
+    },
+    {
+        "question": "Which of the following blood component forms a plug at the site of injuries?",
+        "A": "Platelets",
+        "B": "Blood plasma",
+        "C": "White blood cells",
+        "D": "Red blood cells",
+        "correct": "A",
+        "difficulty": 1
+    },
+    {
+        "question": "In the English language, what is the name of the \"&\" character?",
+        "A": "Ampersand",
+        "B": "Eightslash",
+        "C": "And Sign",
+        "D": "Obelus ",
+        "correct": "A",
+        "difficulty": 1
+    },
+    {
+        "question": "The phrase \"accident waiting to happen\" is an example of what type of figure of speech?",
+        "A": "Simile",
+        "B": "Idiom",
+        "C": "Metaphor",
+        "D": "Analogy",
+        "correct": "B",
+        "difficulty": 2
+    },
+    {
+        "question": "What five letter word is the motto of the IBM Computer company?",
+        "A": "Think",
+        "B": "Logic",
+        "C": "Pixel",
+        "D": "Click",
+        "correct": "A",
+        "difficulty": 2
+    },
+    {
+        "question": "The song \"Feel Good Inc.\" by British band Gorillaz features which hip hop group?",
+        "A": "OutKast",
+        "B": "Cypress Hill",
+        "C": "Public Enemy",
+        "D": "De La Soul",
+        "correct": "D",
+        "difficulty": 2
+    },
+    {
+        "question": "What is the official name of the star located closest to the North Celestial Pole?",
+        "A": "Gamma Cephei",
+        "B": "Polaris",
+        "C": "Iota Cephei",
+        "D": "Eridanus",
+        "correct": "B",
+        "difficulty": 1
+    },
+    {
+        "question": "Which of these is used to show that Earth spins on an axis? ",
+        "A": "Foucault Pendulum ",
+        "B": "Polaris",
+        "C": "Tectonic Plates ",
+        "D": "Sundial",
+        "correct": "A",
+        "difficulty": 3
+    },
+    {
+        "question": "Pearl Jam was originally named after which sports figure?",
+        "A": "Danger Fourpence",
+        "B": "Mookie Blaylock",
+        "C": "Oil Can Boyd",
+        "D": "Blue Moon Odom",
+        "correct": "B",
+        "difficulty": 2
+    },
+    {
+        "question": "Dallon Weekes, former touring basist of Panic! At the Disco, created his own band in 2016 called...",
+        "A": "Run Away From The People",
+        "B": "Where Did You All Come From?",
+        "C": "Cheats At Hide And Seek",
+        "D": "I Don't Know How But They Found Me",
+        "correct": "D",
+        "difficulty": 3
+    },
+    {
+        "question": "What was the name of the sea witch in the 1989 Disney film \"The Little Mermaid\"?",
+        "A": "Maleficent",
+        "B": "Ursula",
+        "C": "Lady Tremaine",
+        "D": "Madam Mim",
+        "correct": "B",
+        "difficulty": 1
+    },
+    {
+        "question": "In \"Super Mario World 2: Yoshi's Island\", which of these colors is NOT represented by a Yoshi?",
+        "A": "Brown",
+        "B": "White",
+        "C": "Red",
+        "D": "Purple",
+        "correct": "B",
+        "difficulty": 2
+    },
+    {
+        "question": "The protagonist in the game \"Cave Story\" is named",
+        "A": "Curly",
+        "B": "Arthur",
+        "C": "Quote",
+        "D": "Kazuma",
+        "correct": "C",
+        "difficulty": 2
+    },
+    {
+        "question": "In which years did the Battle of Gallipoli take place?",
+        "A": "1914 - 1918",
+        "B": "1914 - 1915",
+        "C": "1915 - 1918",
+        "D": "1915 - 1916",
+        "correct": "D",
+        "difficulty": 2
+    }
+]
