@@ -1,7 +1,7 @@
 import streamlit as st  # Streamlit is the library that turns this Python script into a web app
 import json              # json lets us read our questions.json file
 import random            # random is used for shuffling, sampling, and simulating lifelines
-from styles import inject_css, show_host  # show_host renders the Joao character in the corner
+from styles import inject_css, show_host, show_money_rain  # show_money_rain replaces st.balloons()
 
 
 # ─────────────────────────────────────────
@@ -38,37 +38,112 @@ CHECKPOINTS_RISKY   = [4]      # Risky mode: only one safe level
 # JOAO'S COMMENTS
 # ─────────────────────────────────────────
 
-# These are the lines Joao can say in different situations.
+# These are the lines João can say in different situations.
 # random.choice() picks one randomly each time so he doesn't repeat himself.
-JOAO_INTRO       = "Ola! I am Joao, your host. Let's see if you have what it takes!"
-JOAO_CORRECT     = ["Correct! Even I knew that one.", "Well done. I had my doubts about you.",
-                     "Right again. Don't let it go to your head.", "Impressive... for a beginner."]
-JOAO_WRONG       = ["Oh dear. That was painful to watch.", "I knew that one. Did you not?",
-                     "Perhaps quiz shows are not your calling.", "Back to school, perhaps?"]
-JOAO_FIFTY       = ["Fifty-fifty! Eliminating the obvious ones, are we?",
-                     "Do you need the options reduced? How charming.",
-                     "Two gone. You still have to pick correctly, you know."]
-JOAO_AUDIENCE    = ["The audience! Always fun to see what the masses think.",
-                     "Let's see if the crowd is smarter than you. Likely, yes.",
-                     "Asking the audience? Bold. Or desperate. Hard to tell."]
-JOAO_PHONE       = ["Phoning a friend! Do you have intelligent friends?",
-                     "Let's hope your friend is sharper than you.",
-                     "A phone call! How retro. And how telling."]
-JOAO_SWITCH      = ["Switching the question? Running away, are we?",
-                     "A fresh question. Let's hope you find this one easier.",
-                     "Cowardly, but legal. Here is a new one."]
-JOAO_CHECKPOINT  = ["You've reached a safe level. Don't get comfortable.",
-                     "A checkpoint! Even I will admit — well played.",
-                     "Safe at last. For now."]
-JOAO_WALKAWAY    = ["Walking away? Wise, perhaps. Or cowardly. Both, probably.",
-                     "Taking the money! Sensible. Not exciting, but sensible.",
-                     "You walk away. I stay here. As always."]
-JOAO_MILLIONAIRE = ["A MILLIONAIRE! I am... actually impressed. Well done.",
-                     "You did it! I never doubted you. (I doubted you.)"]
-JOAO_IDLE        = ["Take your time. I am not going anywhere.",
-                     "Thinking? Good. A rare sight on this show.",
-                     "The suspense is almost interesting.",
-                     "I have seen faster thinkers. Not many, but some."]
+# The correct answer list is much longer because in the best case it is shown 14 times.
+# Accents are now correct: Olá, João.
+
+JOAO_INTRO = "Olá! I am João, your host. Let's see if you have what it takes!"
+
+# 20 options for correct answers — needed because this can show up 14 times in one game
+JOAO_CORRECT = [
+    "Correct! Even I knew that one.",
+    "Well done. I had my doubts about you.",
+    "Right again. Don't let it go to your head.",
+    "Impressive... for a beginner.",
+    "Correct. You may continue.",
+    "That one was almost too easy. Almost.",
+    "Good. Keep it up. I dare you.",
+    "You got lucky. Or did you? I cannot tell.",
+    "Right answer. Wrong attitude, but right answer.",
+    "Correct! The audience is mildly impressed.",
+    "Another one down. Only a few more to go.",
+    "I'll admit, I did not expect that.",
+    "Correct. I've seen worse. Not often, but I have.",
+    "You continue to surprise me. Faintly.",
+    "Right. Let's see how long this lasts.",
+    "Correct again. João is... cautiously optimistic.",
+    "Well. You clearly studied. Or guessed well.",
+    "That is correct. Don't celebrate too early.",
+    "Yes. That is the right answer. Well done.",
+    "Correct! João nods. Grudgingly.",
+]
+
+JOAO_WRONG = [
+    "Oh dear. That was painful to watch.",
+    "I knew that one. Did you not?",
+    "Perhaps quiz shows are not your calling.",
+    "Back to school, perhaps?",
+    "Ah. So close. Not really, but still.",
+    "Wrong! João sighs deeply.",
+    "That... was not it. Not even close.",
+]
+
+JOAO_FIFTY = [
+    "Fifty-fifty! Eliminating the obvious ones, are we?",
+    "Do you need the options reduced? How charming.",
+    "Two gone. You still have to pick correctly, you know.",
+    "50:50. A classic move for the uncertain mind.",
+    "Half the options gone. Half your excuses too.",
+]
+
+JOAO_AUDIENCE = [
+    "The audience! Always fun to see what the masses think.",
+    "Let's see if the crowd is smarter than you. Likely, yes.",
+    "Asking the audience? Bold. Or desperate. Hard to tell.",
+    "Democracy in action. How quaint.",
+    "The people have spoken. Whether you listen is up to you.",
+]
+
+JOAO_PHONE = [
+    "Phoning a friend! Do you have intelligent friends?",
+    "Let's hope your friend is sharper than you.",
+    "A phone call! How retro. And how telling.",
+    "Your friend better be smarter than you look.",
+    "Calling for help already? João raises an eyebrow.",
+]
+
+JOAO_SWITCH = [
+    "Switching the question? Running away, are we?",
+    "A fresh question. Let's hope you find this one easier.",
+    "Cowardly, but legal. Here is a new one.",
+    "Switching! A bold move. Or a desperate one.",
+    "New question coming. Try not to switch again.",
+]
+
+JOAO_CHECKPOINT = [
+    "You've reached a safe level. Don't get comfortable.",
+    "A checkpoint! Even I will admit — well played.",
+    "Safe at last. For now.",
+    "Safe level reached. João tips his hat. Slightly.",
+    "You are guaranteed something. Not a million, but something.",
+]
+
+JOAO_WALKAWAY = [
+    "Walking away? Wise, perhaps. Or cowardly. Both, probably.",
+    "Taking the money! Sensible. Not exciting, but sensible.",
+    "You walk away. I stay here. As always.",
+    "A safe exit. João approves. Grudgingly.",
+    "Smart play. Or just scared. Hard to say.",
+]
+
+JOAO_MILLIONAIRE = [
+    "A MILLIONAIRE! I am... actually impressed. Well done.",
+    "You did it! I never doubted you. (I doubted you.)",
+    "One million euros! João is speechless. Almost.",
+    "Extraordinary. Truly. João bows. Just this once.",
+]
+
+JOAO_IDLE = [
+    "Take your time. I am not going anywhere.",
+    "Thinking? Good. A rare sight on this show.",
+    "The suspense is almost interesting.",
+    "I have seen faster thinkers. Not many, but some.",
+    "João waits. Patiently. Mostly.",
+    "Still thinking? João checks his watch.",
+    "No rush. The million will wait.",
+    "Concentration is key. Or so I am told.",
+]
 
 
 # ─────────────────────────────────────────
@@ -96,7 +171,7 @@ def init_state():
         st.session_state.audience_votes    = None              # stores audience vote percentages (or None if unused)
         st.session_state.phone_message     = None              # stores the friend's message (or None if unused)
         st.session_state.popup             = None              # stores the current popup message (or None if none)
-        st.session_state.joao_comment      = JOAO_INTRO        # Joao's current speech bubble line
+        st.session_state.joao_comment      = JOAO_INTRO        # João's current speech bubble line
 
 
 # ─────────────────────────────────────────
@@ -161,16 +236,15 @@ def show_splash():
     No player name or mode is collected here — that happens on the next screen.
     """
 
-    # Show Joao with his intro comment in the corner
+    # Show João with his intro comment in the corner
     show_host(st.session_state.joao_comment)
 
     # Centre the logo using three columns — the middle column holds the image.
-    # col widths [1, 2, 1] mean the centre column is twice as wide as the side spacers.
-    col_left, col_mid, col_right = st.columns([1, 2, 1])
+    # col widths [1, 3, 1] give the logo more space than before so it appears larger.
+    col_left, col_mid, col_right = st.columns([1, 3, 1])
     with col_mid:
-        # Logo is served from app/static/logo.png — the same URL pattern as joao.png.
-        # app/static/ is how Streamlit exposes files placed in .streamlit/static/ to the browser.
-        # This must be used inside a raw HTML img tag, not st.image(), for the path to resolve.
+        # Logo served via app/static/ URL — same approach as joao.png in styles.py.
+        # This must be inside a raw HTML img tag; st.image() cannot use this URL path.
         st.markdown(
             "<img src='app/static/logo.png' style='width:100%;display:block;margin:auto;'>",
             unsafe_allow_html=True
@@ -179,8 +253,8 @@ def show_splash():
     st.write("")  # spacing below the logo
     st.write("")
 
-    # Centre the start button the same way using columns
-    col_left, col_mid, col_right = st.columns([1, 2, 1])
+    # Centre the start button — narrower column than the logo so it doesn't stretch too wide
+    col_left, col_mid, col_right = st.columns([2, 1, 2])
     with col_mid:
         if st.button("Start Playing", use_container_width=True):
             # Move to the setup screen where the player enters their name and picks a mode
@@ -194,13 +268,12 @@ def show_splash():
 def show_setup():
     """Renders the game setup screen where the player enters their name and picks a mode."""
 
-    # Show Joao with his intro line on the setup screen
+    # Show João with his intro line on the setup screen
     show_host(st.session_state.joao_comment)
 
-    # Show a smaller version of the logo above the rules on the setup screen
-    # so the branding is consistent across screens.
-    # Logo served via app/static/ URL — same approach as joao.png in styles.py.
-    col_left, col_mid, col_right = st.columns([2, 1, 2])
+    # Logo shown larger than before — col widths [1, 2, 1] give it more room.
+    # Served via app/static/ URL, same as joao.png.
+    col_left, col_mid, col_right = st.columns([1, 2, 1])
     with col_mid:
         st.markdown(
             "<img src='app/static/logo.png' style='width:100%;display:block;margin:auto;'>",
@@ -285,7 +358,7 @@ def show_setup():
                 st.session_state.checkpoints = CHECKPOINTS_RISKY
                 st.session_state.lifelines   = ["50:50", "Ask the Audience", "Phone a Friend", "Switch the Question"]
 
-            # Joao greets the player by name as the game starts
+            # João greets the player by name as the game starts
             st.session_state.joao_comment = f"Welcome, {st.session_state.player_name}. Try not to embarrass yourself."
 
             # Switch to the playing phase and immediately rerun the script.
@@ -380,7 +453,7 @@ def show_popup():
     # Clicking it clears the popup from session_state and reruns — the question screen appears.
     if st.button("Continue", use_container_width=True):
         st.session_state.popup = None
-        # After a correct answer Joao makes an idle comment while the player reads the next question
+        # After a correct answer João makes an idle comment while the player reads the next question
         st.session_state.joao_comment = random.choice(JOAO_IDLE)
         st.rerun()
 
@@ -398,7 +471,7 @@ def show_question():
     # Show the prize ladder in the sidebar first
     show_prize_ladder()
 
-    # Show Joao with his current comment
+    # Show João with his current comment
     show_host(st.session_state.joao_comment)
 
     # If a popup is waiting (player just answered correctly), show it and stop here.
@@ -412,18 +485,18 @@ def show_question():
     q       = st.session_state.questions[q_index]
     # q is now a dictionary like: {"question": "...", "A": "...", "B": "...", "correct": "A", ...}
 
-    # --- Header — small logo left, game name right ---
-    # Logo and title sit in two columns so they appear side by side at the top of the screen.
-    # Logo served via app/static/ URL — same approach as joao.png in styles.py.
+    # --- Header — logo left, game name right ---
+    # Logo is larger than before — width increased from 80px to 120px.
+    # Game title includes the correct accent on João.
     col_logo, col_title = st.columns([1, 4])
     with col_logo:
         st.markdown(
-            "<img src='app/static/logo.png' style='width:80px;'>",
+            "<img src='app/static/logo.png' style='width:120px;'>",
             unsafe_allow_html=True
         )
     with col_title:
-        # Game name updated to match the new branding from the logo
-        st.markdown("<h1 style='text-align:left;font-size:1.5rem;'>Who Wants To Impress Joao?</h1>",
+        # Accent on João now correct in the game title
+        st.markdown("<h1 style='text-align:left;font-size:1.5rem;'>Who Wants To Impress João?</h1>",
                     unsafe_allow_html=True)
         st.markdown(f"<p style='color:#a8b8c8;margin:0;'>{st.session_state.player_name} &nbsp;|&nbsp; {st.session_state.game_mode} Mode</p>",
                     unsafe_allow_html=True)
@@ -478,6 +551,7 @@ def show_question():
 
     # --- Lifeline buttons ---
     # Each lifeline gets a symbol prefix so they are visually distinct.
+    # Used lifelines are passed disabled=True which Streamlit greys out — further styled in CSS.
     st.markdown("**Lifelines:**")
     used = st.session_state.used_lifelines  # list of lifeline names already used this game
 
@@ -501,7 +575,8 @@ def show_question():
             symbol    = lifeline_symbols.get(lifeline, "")
             btn_label = f"{symbol} {lifeline} (used)" if disabled else f"{symbol} {lifeline}"
 
-            # disabled=True makes the button unclickable and visually greyed out
+            # disabled=True makes the button unclickable and triggers the CSS disabled style
+            # defined in styles.py which makes it visually dark, faded and dashed
             if st.button(btn_label, disabled=disabled, use_container_width=True, key=f"lf_{i}"):
                 handle_lifeline(lifeline, q)  # apply the chosen lifeline
 
@@ -549,7 +624,7 @@ def handle_answer(chosen_option, q):
         # q_index has already been incremented, so the checkpoint is at q_index - 1.
         just_hit_checkpoint = (st.session_state.q_index - 1) in st.session_state.checkpoints
 
-        # Build the popup message and set Joao's comment
+        # Build the popup message and set João's comment
         if just_hit_checkpoint:
             st.session_state.joao_comment = random.choice(JOAO_CHECKPOINT)
         else:
@@ -602,7 +677,7 @@ def handle_lifeline(lifeline, q):
     # Add this lifeline to the used list so it becomes disabled for the rest of the game
     st.session_state.used_lifelines.append(lifeline)
 
-    # Set Joao's comment based on which lifeline was chosen, then apply the effect
+    # Set João's comment based on which lifeline was chosen, then apply the effect
     if lifeline == "50:50":
         st.session_state.joao_comment = random.choice(JOAO_FIFTY)
         apply_fifty_fifty(q)
@@ -785,13 +860,14 @@ def show_end_screen():
     Displays the final screen after the game ends.
     Shows a different message depending on whether the player won, answered wrong, or walked away.
     Each outcome uses a distinct styled box (red, gold, blue) defined in styles.py.
+    On a win, show_money_rain() is called instead of st.balloons() for a themed celebration.
     """
 
-    # Show Joao with his end-of-game comment
+    # Show João with his end-of-game comment
     show_host(st.session_state.joao_comment)
 
     # Small logo at top for consistent branding on the end screen.
-    # Logo served via app/static/ URL — same approach as joao.png in styles.py.
+    # Served via app/static/ URL — same approach as joao.png in styles.py.
     col_left, col_mid, col_right = st.columns([2, 1, 2])
     with col_mid:
         st.markdown(
@@ -814,10 +890,11 @@ def show_end_screen():
                 <p>Incredible, {st.session_state.player_name}!</p>
                 <p>You answered all 15 questions correctly.</p>
                 <p>You won <strong>EUR 1,000,000</strong>!</p>
-                <p>Joao is impressed. Finally.</p>
+                <p>João is impressed. Finally.</p>
             </div>
         """, unsafe_allow_html=True)
-        st.balloons()  # triggers a fun confetti animation in the browser
+        # Money rain animation — euro bills fall down the screen instead of st.balloons()
+        show_money_rain()
 
     elif reason == "wrong":
         # Player answered incorrectly — red styled box

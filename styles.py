@@ -59,6 +59,19 @@ def inject_css():
         padding: 0.4rem 0.6rem;
     }
 
+    /* ── Disabled lifeline buttons — clearly inactive so players know they cannot be used ── */
+    /* Streamlit adds the disabled attribute when disabled=True is passed to st.button() */
+    [data-testid="stHorizontalBlock"] .stButton > button:disabled {
+        background: #0a0f1a !important;          /* very dark, almost black */
+        color: #3a4a5a !important;               /* dim grey text — clearly inactive */
+        border: 2px dashed #2a3a4a !important;   /* dashed dim border instead of solid */
+        opacity: 0.5 !important;                 /* fade the whole button */
+        text-shadow: none !important;
+        box-shadow: none !important;
+        cursor: not-allowed !important;
+        transform: none !important;
+    }
+
     /* ── Question box ── */
     .question-box {
         background: linear-gradient(180deg, #0f2347 0%, #071428 100%);
@@ -221,6 +234,33 @@ def inject_css():
         border-radius: 10px;
     }
 
+    /* ── Money rain animation — shown on the win screen instead of balloons ── */
+    /* The bills are rendered as emoji characters falling from the top of the screen. */
+    /* Each bill is absolutely positioned and animated with a unique delay and speed */
+    /* so they fall at different times, creating a natural rain effect. */
+    .money-rain {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;   /* clicks pass through so the Play Again button still works */
+        z-index: 9000;
+        overflow: hidden;
+    }
+    .bill {
+        position: absolute;
+        top: -80px;             /* start above the visible screen */
+        font-size: 2.5rem;
+        animation: fall linear forwards;
+        opacity: 0.9;
+    }
+    @keyframes fall {
+        0%   { transform: translateY(0) rotate(0deg);   opacity: 0.9; }
+        80%  { opacity: 0.9; }
+        100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
     </style>
     """, unsafe_allow_html=True)
 
@@ -228,12 +268,12 @@ def inject_css():
 def show_host(comment: str = ""):
     """
     Renders Joao in the top-right corner using position:fixed CSS.
-    joao.png is served from the static/ folder at the project root.
-    The image has a transparent background so it blends into the dark theme.
-    The speech bubble floats above him with a downward pointing tail.
+    joao.png is served from app/static/joao.png — the same URL pattern used for the logo.
+    The speech bubble is slightly larger than before so it is easier to read.
     """
 
-    # Speech bubble — only rendered when there is a comment to show
+    # Speech bubble — only rendered when there is a comment to show.
+    # Font size increased from 0.75rem to 0.88rem and max-width widened for readability.
     if comment:
         safe = comment.replace("'", "&#39;").replace('"', '&quot;')
         st.markdown(f"""
@@ -244,14 +284,14 @@ def show_host(comment: str = ""):
                 background: #ffffff;
                 color: #0a1628;
                 border-radius: 12px;
-                padding: 8px 12px;
-                font-size: 0.75rem;
+                padding: 10px 14px;
+                font-size: 0.88rem;
                 font-family: Georgia, serif;
                 font-style: italic;
-                max-width: 140px;
+                max-width: 160px;
                 text-align: center;
                 box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-                line-height: 1.4;
+                line-height: 1.5;
                 z-index: 9999;
             ">{safe}
             <div style="
@@ -266,8 +306,7 @@ def show_host(comment: str = ""):
             </div>
         """, unsafe_allow_html=True)
 
-    # Character image — transparent PNG so he blends into the dark background
-    # served from static/joao.png at the project root via Streamlit static serving
+    # Character image — transparent PNG served from app/static/
     st.markdown("""
         <div style="
             position: fixed;
@@ -280,3 +319,40 @@ def show_host(comment: str = ""):
                  style="display:block;" />
         </div>
     """, unsafe_allow_html=True)
+
+
+def show_money_rain():
+    """
+    Renders an animated rain of money bill emoji falling down the screen.
+    Each bill gets a random horizontal position, fall duration, and start delay
+    so the effect looks natural rather than uniform.
+    Bills use the euro banknote emoji which is green and universally supported.
+    """
+
+    # Generate 40 bills with randomised position, speed and delay.
+    # We build the HTML for each bill as a separate div and inject them all at once.
+    import random as _random
+
+    bills_html = ""
+    for _ in range(40):
+        # Random horizontal position across the full screen width
+        left    = _random.randint(0, 95)       # percent
+        # Fall duration between 2 and 5 seconds — mix of fast and slow bills
+        duration = _random.uniform(2.0, 5.0)
+        # Start delay up to 3 seconds so bills don't all appear at once
+        delay    = _random.uniform(0.0, 3.0)
+        # Alternate between euro note emoji and money bag for variety
+        emoji    = _random.choice(["💶", "💶", "💶", "💰"])
+
+        bills_html += (
+            f"<div class='bill' style='"
+            f"left:{left}%;"
+            f"animation-duration:{duration:.1f}s;"
+            f"animation-delay:{delay:.1f}s;"
+            f"'>{emoji}</div>"
+        )
+
+    st.markdown(
+        f"<div class='money-rain'>{bills_html}</div>",
+        unsafe_allow_html=True
+    )
