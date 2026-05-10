@@ -1,7 +1,7 @@
 import streamlit as st  # Streamlit is the library that turns this Python script into a web app
 import json              # json lets us read our questions.json file
 import random            # random is used for shuffling, sampling, and simulating lifelines
-from styles import inject_css # This is a custom module we created to inject CSS styles into the app
+from styles import inject_css, show_host  # show_host renders the Joao character in the corner
 
 
 # ─────────────────────────────────────────
@@ -34,6 +34,42 @@ PRIZE_LADDER = [
 CHECKPOINTS_CLASSIC = [4, 9]   # Classic mode: two safe levels
 CHECKPOINTS_RISKY   = [4]      # Risky mode: only one safe level
 
+# ─────────────────────────────────────────
+# JOAO'S COMMENTS
+# ─────────────────────────────────────────
+
+# These are the lines Joao can say in different situations.
+# random.choice() picks one randomly each time so he doesn't repeat himself.
+JOAO_INTRO       = "Ola! I am Joao, your host. Let's see if you have what it takes!"
+JOAO_CORRECT     = ["Correct! Even I knew that one.", "Well done. I had my doubts about you.",
+                     "Right again. Don't let it go to your head.", "Impressive... for a beginner."]
+JOAO_WRONG       = ["Oh dear. That was painful to watch.", "I knew that one. Did you not?",
+                     "Perhaps quiz shows are not your calling.", "Back to school, perhaps?"]
+JOAO_FIFTY       = ["Fifty-fifty! Eliminating the obvious ones, are we?",
+                     "Do you need the options reduced? How charming.",
+                     "Two gone. You still have to pick correctly, you know."]
+JOAO_AUDIENCE    = ["The audience! Always fun to see what the masses think.",
+                     "Let's see if the crowd is smarter than you. Likely, yes.",
+                     "Asking the audience? Bold. Or desperate. Hard to tell."]
+JOAO_PHONE       = ["Phoning a friend! Do you have intelligent friends?",
+                     "Let's hope your friend is sharper than you.",
+                     "A phone call! How retro. And how telling."]
+JOAO_SWITCH      = ["Switching the question? Running away, are we?",
+                     "A fresh question. Let's hope you find this one easier.",
+                     "Cowardly, but legal. Here is a new one."]
+JOAO_CHECKPOINT  = ["You've reached a safe level. Don't get comfortable.",
+                     "A checkpoint! Even I will admit — well played.",
+                     "Safe at last. For now."]
+JOAO_WALKAWAY    = ["Walking away? Wise, perhaps. Or cowardly. Both, probably.",
+                     "Taking the money! Sensible. Not exciting, but sensible.",
+                     "You walk away. I stay here. As always."]
+JOAO_MILLIONAIRE = ["A MILLIONAIRE! I am... actually impressed. Well done.",
+                     "You did it! I never doubted you. (I doubted you.)"]
+JOAO_IDLE        = ["Take your time. I am not going anywhere.",
+                     "Thinking? Good. A rare sight on this show.",
+                     "The suspense is almost interesting.",
+                     "I have seen faster thinkers. Not many, but some."]
+
 
 # ─────────────────────────────────────────
 # INITIALIZE SESSION STATE
@@ -47,7 +83,7 @@ def init_state():
     # so we set up all variables with their starting values.
     # We only check one variable ("phase") because they are all created together at the same time.
     if "phase" not in st.session_state:
-        st.session_state.phase             = "setup"           # which screen to show: "setup", "playing", or "game_over"
+        st.session_state.phase             = "splash"          # first screen shown is the splash/logo screen
         st.session_state.player_name       = ""                # the name the player types in
         st.session_state.game_mode         = ""                # "Classic" or "Risky"
         st.session_state.q_index           = 0                 # which question we are on (0 = first question)
@@ -59,6 +95,8 @@ def init_state():
         st.session_state.remaining_options = ["A", "B", "C", "D"]  # answer options still visible (50:50 removes 2)
         st.session_state.audience_votes    = None              # stores audience vote percentages (or None if unused)
         st.session_state.phone_message     = None              # stores the friend's message (or None if unused)
+        st.session_state.popup             = None              # stores the current popup message (or None if none)
+        st.session_state.joao_comment      = JOAO_INTRO        # Joao's current speech bubble line
 
 
 # ─────────────────────────────────────────
@@ -113,12 +151,62 @@ def get_checkpoint_prize():
 
 
 # ─────────────────────────────────────────
+# SPLASH SCREEN
+# ─────────────────────────────────────────
+def show_splash():
+    """
+    The very first screen shown when the app loads.
+    Displays the game logo centred on the dark background with a single
+    'Start Playing' button below it. Clicking the button moves to the setup screen.
+    No player name or mode is collected here — that happens on the next screen.
+    """
+
+    # Show Joao with his intro comment in the corner
+    show_host(st.session_state.joao_comment)
+
+    # Centre the logo using three columns — the middle column holds the image.
+    # col widths [1, 2, 1] mean the centre column is twice as wide as the side spacers.
+    col_left, col_mid, col_right = st.columns([1, 2, 1])
+    with col_mid:
+        # Logo is served from app/static/logo.png — the same URL pattern as joao.png.
+        # app/static/ is how Streamlit exposes files placed in .streamlit/static/ to the browser.
+        # This must be used inside a raw HTML img tag, not st.image(), for the path to resolve.
+        st.markdown(
+            "<img src='app/static/logo.png' style='width:100%;display:block;margin:auto;'>",
+            unsafe_allow_html=True
+        )
+
+    st.write("")  # spacing below the logo
+    st.write("")
+
+    # Centre the start button the same way using columns
+    col_left, col_mid, col_right = st.columns([1, 2, 1])
+    with col_mid:
+        if st.button("Start Playing", use_container_width=True):
+            # Move to the setup screen where the player enters their name and picks a mode
+            st.session_state.phase = "setup"
+            st.rerun()
+
+
+# ─────────────────────────────────────────
 # SETUP SCREEN
 # ─────────────────────────────────────────
 def show_setup():
     """Renders the game setup screen where the player enters their name and picks a mode."""
 
-    st.title("Who Wants to Be a Millionaire?")
+    # Show Joao with his intro line on the setup screen
+    show_host(st.session_state.joao_comment)
+
+    # Show a smaller version of the logo above the rules on the setup screen
+    # so the branding is consistent across screens.
+    # Logo served via app/static/ URL — same approach as joao.png in styles.py.
+    col_left, col_mid, col_right = st.columns([2, 1, 2])
+    with col_mid:
+        st.markdown(
+            "<img src='app/static/logo.png' style='width:100%;display:block;margin:auto;'>",
+            unsafe_allow_html=True
+        )
+
     st.write("---")  # horizontal divider line
 
     # st.expander creates a collapsible section — clicking it reveals the rules.
@@ -197,6 +285,9 @@ def show_setup():
                 st.session_state.checkpoints = CHECKPOINTS_RISKY
                 st.session_state.lifelines   = ["50:50", "Ask the Audience", "Phone a Friend", "Switch the Question"]
 
+            # Joao greets the player by name as the game starts
+            st.session_state.joao_comment = f"Welcome, {st.session_state.player_name}. Try not to embarrass yourself."
+
             # Switch to the playing phase and immediately rerun the script.
             # st.rerun() tells Streamlit to re-execute the file from the top,
             # which will now show the question screen instead of the setup screen.
@@ -253,25 +344,90 @@ def show_prize_ladder():
 
 
 # ─────────────────────────────────────────
+# CORRECT ANSWER POPUP
+# ─────────────────────────────────────────
+def show_popup():
+    """
+    Displays a styled green popup when the player answers correctly.
+    If a checkpoint was just reached, a gold checkpoint badge is shown below it.
+    The popup message is stored in st.session_state.popup and cleared after display.
+    A 'Continue' button dismisses the popup and moves on to the next question.
+    """
+
+    # popup is a dict: {"message": str, "checkpoint": bool}
+    # It is set in handle_answer() when the player is correct, and cleared here after dismissal.
+    popup = st.session_state.popup
+
+    st.markdown(f"""
+        <div class='popup-correct'>
+            <h2>Correct!</h2>
+            <p>{popup['message']}</p>
+        </div>
+    """, unsafe_allow_html=True)
+
+    # If this correct answer also landed on a checkpoint, show the gold badge below
+    if popup.get("checkpoint"):
+        checkpoint_prize = PRIZE_LADDER[st.session_state.q_index - 1]
+        st.markdown(f"""
+            <div class='popup-checkpoint'>
+                <p>SAFE LEVEL REACHED — EUR {checkpoint_prize:,} is guaranteed!</p>
+            </div>
+        """, unsafe_allow_html=True)
+
+    st.write("")
+
+    # The Continue button dismisses the popup.
+    # Clicking it clears the popup from session_state and reruns — the question screen appears.
+    if st.button("Continue", use_container_width=True):
+        st.session_state.popup = None
+        # After a correct answer Joao makes an idle comment while the player reads the next question
+        st.session_state.joao_comment = random.choice(JOAO_IDLE)
+        st.rerun()
+
+
+# ─────────────────────────────────────────
 # PLAYING PHASE — QUESTION SCREEN
 # ─────────────────────────────────────────
 def show_question():
     """
     The main game screen. Shows the current question, four answer buttons,
     lifeline buttons, lifeline results (if any were used), and the walk away button.
+    If a correct-answer popup is pending, it is shown instead of the question.
     """
 
     # Show the prize ladder in the sidebar first
     show_prize_ladder()
+
+    # Show Joao with his current comment
+    show_host(st.session_state.joao_comment)
+
+    # If a popup is waiting (player just answered correctly), show it and stop here.
+    # The question screen is hidden until the player clicks Continue.
+    if st.session_state.popup:
+        show_popup()
+        return  # stop rendering the rest of the question screen
 
     # Get the current question index and fetch the corresponding question dictionary
     q_index = st.session_state.q_index
     q       = st.session_state.questions[q_index]
     # q is now a dictionary like: {"question": "...", "A": "...", "B": "...", "correct": "A", ...}
 
-    # --- Header ---
-    st.title("Who Wants to Be a Millionaire?")
-    st.markdown(f"### {st.session_state.player_name} | {st.session_state.game_mode} Mode")
+    # --- Header — small logo left, game name right ---
+    # Logo and title sit in two columns so they appear side by side at the top of the screen.
+    # Logo served via app/static/ URL — same approach as joao.png in styles.py.
+    col_logo, col_title = st.columns([1, 4])
+    with col_logo:
+        st.markdown(
+            "<img src='app/static/logo.png' style='width:80px;'>",
+            unsafe_allow_html=True
+        )
+    with col_title:
+        # Game name updated to match the new branding from the logo
+        st.markdown("<h1 style='text-align:left;font-size:1.5rem;'>Who Wants To Impress Joao?</h1>",
+                    unsafe_allow_html=True)
+        st.markdown(f"<p style='color:#a8b8c8;margin:0;'>{st.session_state.player_name} &nbsp;|&nbsp; {st.session_state.game_mode} Mode</p>",
+                    unsafe_allow_html=True)
+
     st.write("---")
 
     # --- Question text and current prize ---
@@ -321,8 +477,17 @@ def show_question():
     show_lifeline_results()
 
     # --- Lifeline buttons ---
+    # Each lifeline gets a symbol prefix so they are visually distinct.
     st.markdown("**Lifelines:**")
     used = st.session_state.used_lifelines  # list of lifeline names already used this game
+
+    # Symbols for each lifeline — shown to the left of the label inside the button
+    lifeline_symbols = {
+        "50:50":               "✂️",
+        "Ask the Audience":    "👥",
+        "Phone a Friend":      "📞",
+        "Switch the Question": "🔄"
+    }
 
     # Create one column per lifeline so they appear side by side in a row
     lifeline_cols = st.columns(len(st.session_state.lifelines))
@@ -332,8 +497,9 @@ def show_question():
             # A lifeline is disabled if it has already been used
             disabled = lifeline in used
 
-            # Change the button label to indicate it has been used
-            btn_label = f"{lifeline} (used)" if disabled else lifeline
+            # Build the button label: symbol + name, or symbol + name + (used)
+            symbol    = lifeline_symbols.get(lifeline, "")
+            btn_label = f"{symbol} {lifeline} (used)" if disabled else f"{symbol} {lifeline}"
 
             # disabled=True makes the button unclickable and visually greyed out
             if st.button(btn_label, disabled=disabled, use_container_width=True, key=f"lf_{i}"):
@@ -347,9 +513,10 @@ def show_question():
         # The walk away prize is the prize from the PREVIOUS question (already won)
         walk_prize = PRIZE_LADDER[q_index - 1]
         if st.button(f"Walk Away with EUR {walk_prize:,}", use_container_width=True):
-            st.session_state.money      = walk_prize   # lock in the winnings
-            st.session_state.phase      = "game_over"  # end the game
-            st.session_state.end_reason = "walk_away"  # tells the end screen why the game ended
+            st.session_state.money        = walk_prize   # lock in the winnings
+            st.session_state.phase        = "game_over"  # end the game
+            st.session_state.end_reason   = "walk_away"  # tells the end screen why the game ended
+            st.session_state.joao_comment = random.choice(JOAO_WALKAWAY)
             st.rerun()
 
 
@@ -363,7 +530,7 @@ def handle_answer(chosen_option, q):
     """
 
     if chosen_option == q["correct"]:
-        # ✅ Correct answer
+        # Correct answer
 
         # Update the player's winnings to the prize for the current question
         st.session_state.money   = PRIZE_LADDER[st.session_state.q_index]
@@ -378,15 +545,34 @@ def handle_answer(chosen_option, q):
         st.session_state.audience_votes    = None
         st.session_state.phone_message     = None
 
+        # Check if the player just landed exactly on a checkpoint index.
+        # q_index has already been incremented, so the checkpoint is at q_index - 1.
+        just_hit_checkpoint = (st.session_state.q_index - 1) in st.session_state.checkpoints
+
+        # Build the popup message and set Joao's comment
+        if just_hit_checkpoint:
+            st.session_state.joao_comment = random.choice(JOAO_CHECKPOINT)
+        else:
+            st.session_state.joao_comment = random.choice(JOAO_CORRECT)
+
+        popup_msg = f"You are now playing for EUR {PRIZE_LADDER[min(st.session_state.q_index, 14)]:,}!"
+
         # Check if the player just answered the last question (index 15 = beyond question 15)
         if st.session_state.q_index >= 15:
-            st.session_state.phase      = "game_over"
-            st.session_state.end_reason = "won"       # the player wins!
+            st.session_state.phase        = "game_over"
+            st.session_state.end_reason   = "won"
+            st.session_state.joao_comment = random.choice(JOAO_MILLIONAIRE)
+            st.session_state.popup        = None  # no popup needed — go straight to end screen
         else:
-            st.session_state.phase = "playing"        # continue to the next question
+            st.session_state.phase = "playing"
+            # Store the popup so show_question() can display it before the next question
+            st.session_state.popup = {
+                "message":    popup_msg,
+                "checkpoint": just_hit_checkpoint
+            }
 
     else:
-        # ❌ Wrong answer
+        # Wrong answer
 
         # Calculate fallback prize using the checkpoint helper function
         st.session_state.money = get_checkpoint_prize()
@@ -395,8 +581,9 @@ def handle_answer(chosen_option, q):
         st.session_state.correct_answer = q["correct"]           # e.g. "D"
         st.session_state.correct_text   = q[q["correct"]]        # e.g. "Anna Karenina"
 
-        st.session_state.phase      = "game_over"
-        st.session_state.end_reason = "wrong"
+        st.session_state.phase        = "game_over"
+        st.session_state.end_reason   = "wrong"
+        st.session_state.joao_comment = random.choice(JOAO_WRONG)
 
     # st.rerun() forces Streamlit to re-execute the script immediately,
     # so the new phase is reflected on screen right away.
@@ -415,14 +602,18 @@ def handle_lifeline(lifeline, q):
     # Add this lifeline to the used list so it becomes disabled for the rest of the game
     st.session_state.used_lifelines.append(lifeline)
 
-    # Call the appropriate function based on which lifeline was chosen
+    # Set Joao's comment based on which lifeline was chosen, then apply the effect
     if lifeline == "50:50":
+        st.session_state.joao_comment = random.choice(JOAO_FIFTY)
         apply_fifty_fifty(q)
     elif lifeline == "Ask the Audience":
+        st.session_state.joao_comment = random.choice(JOAO_AUDIENCE)
         apply_ask_audience(q)
     elif lifeline == "Phone a Friend":
+        st.session_state.joao_comment = random.choice(JOAO_PHONE)
         apply_phone_friend(q)
     elif lifeline == "Switch the Question":
+        st.session_state.joao_comment = random.choice(JOAO_SWITCH)
         apply_switch_question()
 
     # Rerun the page so the lifeline effect is immediately visible
@@ -456,7 +647,7 @@ def apply_fifty_fifty(q):
 def apply_ask_audience(q):
     """
     Simulates the audience voting lifeline.
-    The correct answer usually gets the most votes (45–75%), but not always —
+    The correct answer usually gets the most votes (45-75%), but not always —
     this keeps the lifeline realistic and not a guaranteed giveaway.
     """
     options = ["A", "B", "C", "D"]
@@ -513,15 +704,12 @@ def apply_phone_friend(q):
 
     if outcome == "knows":
         msg = f"I am pretty confident it is **{correct}: {q[correct]}**. Go for it!"
-
     elif outcome == "unsure_correct":
         msg = f"I think it might be **{correct}: {q[correct]}**, but I am not 100% sure..."
-
     elif outcome == "wrong":
         # Pick a random wrong option to give as the (incorrect) answer
         wrong_opt = random.choice([o for o in options if o != correct])
         msg = f"I think it is **{wrong_opt}: {q[wrong_opt]}**, but do not take my word for it!"
-
     else:  # "no_answer"
         msg = "Sorry, I did not have enough time to think! I am not sure..."
 
@@ -596,8 +784,21 @@ def show_end_screen():
     """
     Displays the final screen after the game ends.
     Shows a different message depending on whether the player won, answered wrong, or walked away.
+    Each outcome uses a distinct styled box (red, gold, blue) defined in styles.py.
     """
-    st.title("Who Wants to Be a Millionaire?")
+
+    # Show Joao with his end-of-game comment
+    show_host(st.session_state.joao_comment)
+
+    # Small logo at top for consistent branding on the end screen.
+    # Logo served via app/static/ URL — same approach as joao.png in styles.py.
+    col_left, col_mid, col_right = st.columns([2, 1, 2])
+    with col_mid:
+        st.markdown(
+            "<img src='app/static/logo.png' style='width:100%;display:block;margin:auto;'>",
+            unsafe_allow_html=True
+        )
+
     st.write("---")
 
     # end_reason tells us WHY the game ended — set in handle_answer() or the walk away button
@@ -606,20 +807,39 @@ def show_end_screen():
     # if "end_reason" somehow doesn't exist, it returns "" instead of crashing
 
     if reason == "won":
-        # Player answered all 15 questions correctly
-        st.success(f"Incredible, {st.session_state.player_name}! You are a MILLIONAIRE!")
+        # Player answered all 15 questions correctly — gold styled box
+        st.markdown(f"""
+            <div class='end-won'>
+                <h2>MILLIONAIRE!</h2>
+                <p>Incredible, {st.session_state.player_name}!</p>
+                <p>You answered all 15 questions correctly.</p>
+                <p>You won <strong>EUR 1,000,000</strong>!</p>
+                <p>Joao is impressed. Finally.</p>
+            </div>
+        """, unsafe_allow_html=True)
         st.balloons()  # triggers a fun confetti animation in the browser
 
     elif reason == "wrong":
-        # Player answered incorrectly — show what the correct answer was
+        # Player answered incorrectly — red styled box
         correct      = st.session_state.get("correct_answer", "")
         correct_text = st.session_state.get("correct_text", "")
-        st.error(f"Wrong answer! The correct answer was **{correct}: {correct_text}**")
-        st.markdown(f"You go home with **EUR {st.session_state.money:,}**")
+        st.markdown(f"""
+            <div class='end-wrong'>
+                <h2>Wrong Answer!</h2>
+                <p>The correct answer was <strong>{correct}: {correct_text}</strong></p>
+                <p>You go home with <strong>EUR {st.session_state.money:,}</strong></p>
+            </div>
+        """, unsafe_allow_html=True)
 
     elif reason == "walk_away":
-        # Player chose to walk away voluntarily
-        st.info(f"You walked away with **EUR {st.session_state.money:,}**. Well played!")
+        # Player chose to walk away voluntarily — blue styled box
+        st.markdown(f"""
+            <div class='end-walkaway'>
+                <h2>You Walked Away!</h2>
+                <p>A bold decision, {st.session_state.player_name}.</p>
+                <p>You leave with <strong>EUR {st.session_state.money:,}</strong></p>
+            </div>
+        """, unsafe_allow_html=True)
 
     st.write("---")
 
@@ -641,6 +861,7 @@ def main():
     based on the current value of st.session_state.phase.
 
     Think of this as a traffic controller:
+      - phase == "splash"    → show the logo splash screen
       - phase == "setup"     → show the setup screen
       - phase == "playing"   → show the question screen
       - phase == "game_over" → show the end screen
@@ -648,10 +869,13 @@ def main():
 
     # Always run init_state() first — it sets up session_state on the very first run
     # and does nothing on subsequent reruns (because the "if" check prevents overwriting)
-    inject_css() # Inject our custom CSS styles into the app
+    inject_css()  # inject our custom CSS styles into the app
     init_state()
 
-    if st.session_state.phase == "setup":
+    if st.session_state.phase == "splash":
+        show_splash()
+
+    elif st.session_state.phase == "setup":
         show_setup()
 
     elif st.session_state.phase == "playing":
