@@ -1,6 +1,8 @@
 import streamlit as st  # Streamlit is the library that turns this Python script into a web app
 import json              # json lets us read our questions.json file
 import random            # random is used for shuffling, sampling, and simulating lifelines
+from styles import inject_css # This is a custom module we created to inject CSS styles into the app
+
 
 # ─────────────────────────────────────────
 # LOAD QUESTIONS
@@ -224,14 +226,30 @@ def show_prize_ladder():
             label = f"EUR {prize:,}"  # {:,} formats numbers with commas e.g. 1,000,000
 
             if i == q_index:
-                # This is the question the player is currently on — bold and marked with >>>
-                st.markdown(f"**>>> Q{i+1} — {label}**")
+                # Current question — gold highlight with arrow, styled via inline HTML
+                st.markdown(
+                    f"<div style='background:linear-gradient(90deg,#1a3a6b,#2a5aaa);"
+                    f"border:1px solid #f0c040;border-radius:6px;padding:4px 8px;"
+                    f"margin:2px 0;color:#f0c040;font-weight:bold;'>"
+                    f"▶ Q{i+1} — {label}</div>",
+                    unsafe_allow_html=True
+                )
             elif i in checkpoints:
-                # This is a safe level — marked with [SAFE]
-                st.markdown(f"[SAFE] Q{i+1} — {label}")
+                # Safe level — green tint with checkmark
+                st.markdown(
+                    f"<div style='background:#0a2010;border:1px solid #3a8a3a;"
+                    f"border-radius:6px;padding:4px 8px;margin:2px 0;color:#6adf6a;'>"
+                    f"✓ Q{i+1} — {label} [SAFE]</div>",
+                    unsafe_allow_html=True
+                )
             else:
-                # Regular question — plain text
-                st.markdown(f"Q{i+1} — {label}")
+                # Regular question — plain dim text
+                st.markdown(
+                    f"<div style='padding:2px 8px;margin:1px 0;"
+                    f"color:#a8b8c8;font-size:0.85rem;'>"
+                    f"Q{i+1} — {label}</div>",
+                    unsafe_allow_html=True
+                )
 
 
 # ─────────────────────────────────────────
@@ -258,9 +276,18 @@ def show_question():
 
     # --- Question text and current prize ---
     current_prize = PRIZE_LADDER[q_index]  # prize for answering THIS question correctly
-    st.markdown(f"**Question {q_index + 1} of 15** — Playing for: EUR {current_prize:,}")
+
+    # prize-display and question-box are custom CSS classes defined in styles.py.
+    # unsafe_allow_html=True is required whenever we pass raw HTML to st.markdown().
+    st.markdown(
+        f"<div class='prize-display'>Question {q_index + 1} of 15 &nbsp;|&nbsp; Playing for: EUR {current_prize:,}</div>",
+        unsafe_allow_html=True
+    )
     # q_index + 1 because q_index is 0-based, but we want to show "Question 1", not "Question 0"
-    st.markdown(f"## {q['question']}")  # display the question text in large font
+    st.markdown(
+        f"<div class='question-box'>{q['question']}</div>",
+        unsafe_allow_html=True
+    )
     st.write("")  # empty line for spacing
 
     # --- Answer buttons arranged in a 2x2 grid ---
@@ -621,6 +648,7 @@ def main():
 
     # Always run init_state() first — it sets up session_state on the very first run
     # and does nothing on subsequent reruns (because the "if" check prevents overwriting)
+    inject_css() # Inject our custom CSS styles into the app
     init_state()
 
     if st.session_state.phase == "setup":
