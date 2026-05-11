@@ -40,8 +40,8 @@ CHECKPOINTS_RISKY   = [4]      # Risky mode: only one safe level
 
 # These are the lines João can say in different situations.
 # random.choice() picks one randomly each time so he doesn't repeat himself.
-# The correct answer list is much longer because in the best case it is shown 14 times.
-# Accents are now correct: Olá, João.
+# The correct and idle lists are long because they can show up up to 14 times per game.
+# Accents are correct throughout: Olá, João.
 
 JOAO_INTRO = "Olá! I am João, your host. Let's see if you have what it takes!"
 
@@ -134,6 +134,7 @@ JOAO_MILLIONAIRE = [
     "Extraordinary. Truly. João bows. Just this once.",
 ]
 
+# 20 options for idle comments — needed because this shows up with every question played
 JOAO_IDLE = [
     "Take your time. I am not going anywhere.",
     "Thinking? Good. A rare sight on this show.",
@@ -143,6 +144,18 @@ JOAO_IDLE = [
     "Still thinking? João checks his watch.",
     "No rush. The million will wait.",
     "Concentration is key. Or so I am told.",
+    "I've hosted many contestants. Few were this slow.",
+    "The clock is not ticking. But João is watching.",
+    "Read all the options. Carefully. Please.",
+    "Take a breath. Then answer correctly.",
+    "João adjusts his glasses. Still waiting.",
+    "This is the part where you answer the question.",
+    "One question at a time. You can do this. Probably.",
+    "I have seen braver decisions. And worse ones.",
+    "The answer is there. Somewhere. Think.",
+    "João sips his coffee. He has time.",
+    "Every second counts. Except when it doesn't.",
+    "The next question is harder. Just so you know.",
 ]
 
 
@@ -240,8 +253,8 @@ def show_splash():
     show_host(st.session_state.joao_comment)
 
     # Centre the logo using three columns — the middle column holds the image.
-    # col widths [1, 3, 1] give the logo more space than before so it appears larger.
-    col_left, col_mid, col_right = st.columns([1, 3, 1])
+    # col widths [1, 6, 1] give the logo maximum horizontal space so it appears large.
+    col_left, col_mid, col_right = st.columns([1, 6, 1])
     with col_mid:
         # Logo served via app/static/ URL — same approach as joao.png in styles.py.
         # This must be inside a raw HTML img tag; st.image() cannot use this URL path.
@@ -271,7 +284,7 @@ def show_setup():
     # Show João with his intro line on the setup screen
     show_host(st.session_state.joao_comment)
 
-    # Logo shown larger than before — col widths [1, 2, 1] give it more room.
+    # Logo shown in a wide column for good visibility on the setup screen.
     # Served via app/static/ URL, same as joao.png.
     col_left, col_mid, col_right = st.columns([1, 2, 1])
     with col_mid:
@@ -302,7 +315,7 @@ def show_setup():
         **Walk away:** Before answering any question (after Q1), you can walk away and keep your current winnings.
         """)
 
-    st.write("### Enter your details to start")
+    st.write("### Enter your name to start")
 
     # st.text_input renders a text box and returns whatever the user has typed.
     # The placeholder text is shown in grey before the user types anything.
@@ -466,6 +479,9 @@ def show_question():
     The main game screen. Shows the current question, four answer buttons,
     lifeline buttons, lifeline results (if any were used), and the walk away button.
     If a correct-answer popup is pending, it is shown instead of the question.
+    The playing screen uses half_logo.png instead of the full logo.
+    After 50:50 is used, eliminated answer buttons are shown dimmed in place
+    rather than removed, so the grid layout does not shift or reorder.
     """
 
     # Show the prize ladder in the sidebar first
@@ -485,17 +501,17 @@ def show_question():
     q       = st.session_state.questions[q_index]
     # q is now a dictionary like: {"question": "...", "A": "...", "B": "...", "correct": "A", ...}
 
-    # --- Header — logo left, game name right ---
-    # Logo is larger than before — width increased from 80px to 120px.
-    # Game title includes the correct accent on João.
+    # --- Header — half logo left, game name right ---
+    # The playing screen uses half_logo.png served from app/static/ — the exact same
+    # URL approach as joao.png and logo.png. Width 150px so it is clearly visible.
     col_logo, col_title = st.columns([1, 4])
     with col_logo:
         st.markdown(
-            "<img src='app/static/logo.png' style='width:120px;'>",
+            "<img src='app/static/half_logo.png' style='width:150px;'>",
             unsafe_allow_html=True
         )
     with col_title:
-        # Accent on João now correct in the game title
+        # Accent on João correct in the game title
         st.markdown("<h1 style='text-align:left;font-size:1.5rem;'>Who Wants To Impress João?</h1>",
                     unsafe_allow_html=True)
         st.markdown(f"<p style='color:#a8b8c8;margin:0;'>{st.session_state.player_name} &nbsp;|&nbsp; {st.session_state.game_mode} Mode</p>",
@@ -519,28 +535,37 @@ def show_question():
     )
     st.write("")  # empty line for spacing
 
-    # --- Answer buttons arranged in a 2x2 grid ---
-    # remaining_options tracks which answers are still visible.
-    # Normally it is ["A", "B", "C", "D"], but after 50:50 it may be e.g. ["A", "C"].
+    # --- Answer buttons arranged in a fixed 2x2 grid ---
+    # All four buttons are always rendered to keep the grid layout stable.
+    # Buttons eliminated by 50:50 are wrapped in a div with the CSS class
+    # "answer-eliminated" which dims them and disables pointer events so they
+    # cannot be clicked. This prevents the remaining options from shifting position.
+    # remaining_options contains the options the player can still choose from.
     remaining = st.session_state.remaining_options
     options   = ["A", "B", "C", "D"]
 
     col1, col2 = st.columns(2)  # two side-by-side columns for the answer buttons
 
     for i, option in enumerate(options):
-        # If this option was eliminated by 50:50, skip it — don't show the button at all
-        if option not in remaining:
-            continue
-
         # i % 2 == 0 is True for i=0 (A) and i=2 (C) → left column
         # i % 2 == 0 is False for i=1 (B) and i=3 (D) → right column
-        # This gives us: A and C on the left, B and D on the right
+        # This gives us: A and C on the left, B and D on the right — always fixed
         col = col1 if i % 2 == 0 else col2
+
         with col:
-            # key= gives each button a unique identifier so Streamlit can tell them apart.
-            # Without unique keys, Streamlit would get confused when multiple buttons exist.
-            if st.button(f"{option}: {q[option]}", use_container_width=True, key=f"ans_{option}"):
-                handle_answer(option, q)  # process the player's answer choice
+            if option not in remaining:
+                # This option was eliminated by 50:50 — wrap it in the dim CSS class.
+                # The button is still rendered so the grid does not shift, but the
+                # "answer-eliminated" wrapper makes it visually dark and unclickable.
+                st.markdown("<div class='answer-eliminated'>", unsafe_allow_html=True)
+                # key= must still be unique even for eliminated buttons
+                st.button(f"{option}: {q[option]}", use_container_width=True, key=f"ans_{option}")
+                st.markdown("</div>", unsafe_allow_html=True)
+            else:
+                # This option is still active — render as a normal clickable button
+                # key= gives each button a unique identifier so Streamlit can tell them apart.
+                if st.button(f"{option}: {q[option]}", use_container_width=True, key=f"ans_{option}"):
+                    handle_answer(option, q)  # process the player's answer choice
 
     st.write("---")
 
@@ -551,7 +576,7 @@ def show_question():
 
     # --- Lifeline buttons ---
     # Each lifeline gets a symbol prefix so they are visually distinct.
-    # Used lifelines are passed disabled=True which Streamlit greys out — further styled in CSS.
+    # Used lifelines are passed disabled=True which triggers the dim CSS style in styles.py.
     st.markdown("**Lifelines:**")
     used = st.session_state.used_lifelines  # list of lifeline names already used this game
 
@@ -701,7 +726,9 @@ def handle_lifeline(lifeline, q):
 def apply_fifty_fifty(q):
     """
     Removes 2 wrong answers from the screen, leaving only the correct answer
-    and 1 randomly chosen wrong answer.
+    and 1 randomly chosen wrong answer. The eliminated options are still rendered
+    in their original grid position but visually dimmed via the answer-eliminated
+    CSS class — so the layout never shifts or reorders.
     """
     # Build a list of all wrong options (all options except the correct one)
     wrong = [opt for opt in ["A", "B", "C", "D"] if opt != q["correct"]]
@@ -712,8 +739,8 @@ def apply_fifty_fifty(q):
     # Take the first 2 from the shuffled list — these will be eliminated
     eliminated = wrong[:2]
 
-    # Update remaining_options to only contain the options NOT eliminated
-    # This list is used in show_question() to decide which buttons to display
+    # Update remaining_options to only the options NOT eliminated.
+    # show_question() uses this list to decide which buttons get the dim wrapper.
     st.session_state.remaining_options = [
         opt for opt in ["A", "B", "C", "D"] if opt not in eliminated
     ]
@@ -861,21 +888,11 @@ def show_end_screen():
     Shows a different message depending on whether the player won, answered wrong, or walked away.
     Each outcome uses a distinct styled box (red, gold, blue) defined in styles.py.
     On a win, show_money_rain() is called instead of st.balloons() for a themed celebration.
+    The logo is displayed larger on the win screen using wider column proportions.
     """
 
     # Show João with his end-of-game comment
     show_host(st.session_state.joao_comment)
-
-    # Small logo at top for consistent branding on the end screen.
-    # Served via app/static/ URL — same approach as joao.png in styles.py.
-    col_left, col_mid, col_right = st.columns([2, 1, 2])
-    with col_mid:
-        st.markdown(
-            "<img src='app/static/logo.png' style='width:100%;display:block;margin:auto;'>",
-            unsafe_allow_html=True
-        )
-
-    st.write("---")
 
     # end_reason tells us WHY the game ended — set in handle_answer() or the walk away button
     reason = st.session_state.get("end_reason", "")
@@ -883,6 +900,15 @@ def show_end_screen():
     # if "end_reason" somehow doesn't exist, it returns "" instead of crashing
 
     if reason == "won":
+        # On the win screen the logo is shown extra large using [1, 3, 1] columns —
+        # wider than the setup screen to make the branding more celebratory.
+        col_left, col_mid, col_right = st.columns([1, 3, 1])
+        with col_mid:
+            st.markdown(
+                "<img src='app/static/logo.png' style='width:100%;display:block;margin:auto;'>",
+                unsafe_allow_html=True
+            )
+        st.write("---")
         # Player answered all 15 questions correctly — gold styled box
         st.markdown(f"""
             <div class='end-won'>
@@ -896,27 +922,37 @@ def show_end_screen():
         # Money rain animation — euro bills fall down the screen instead of st.balloons()
         show_money_rain()
 
-    elif reason == "wrong":
-        # Player answered incorrectly — red styled box
-        correct      = st.session_state.get("correct_answer", "")
-        correct_text = st.session_state.get("correct_text", "")
-        st.markdown(f"""
-            <div class='end-wrong'>
-                <h2>Wrong Answer!</h2>
-                <p>The correct answer was <strong>{correct}: {correct_text}</strong></p>
-                <p>You go home with <strong>EUR {st.session_state.money:,}</strong></p>
-            </div>
-        """, unsafe_allow_html=True)
+    else:
+        # For wrong and walk_away screens the logo is shown at normal size
+        col_left, col_mid, col_right = st.columns([2, 1, 2])
+        with col_mid:
+            st.markdown(
+                "<img src='app/static/logo.png' style='width:100%;display:block;margin:auto;'>",
+                unsafe_allow_html=True
+            )
+        st.write("---")
 
-    elif reason == "walk_away":
-        # Player chose to walk away voluntarily — blue styled box
-        st.markdown(f"""
-            <div class='end-walkaway'>
-                <h2>You Walked Away!</h2>
-                <p>A bold decision, {st.session_state.player_name}.</p>
-                <p>You leave with <strong>EUR {st.session_state.money:,}</strong></p>
-            </div>
-        """, unsafe_allow_html=True)
+        if reason == "wrong":
+            # Player answered incorrectly — red styled box
+            correct      = st.session_state.get("correct_answer", "")
+            correct_text = st.session_state.get("correct_text", "")
+            st.markdown(f"""
+                <div class='end-wrong'>
+                    <h2>Wrong Answer!</h2>
+                    <p>The correct answer was <strong>{correct}: {correct_text}</strong></p>
+                    <p>You go home with <strong>EUR {st.session_state.money:,}</strong></p>
+                </div>
+            """, unsafe_allow_html=True)
+
+        elif reason == "walk_away":
+            # Player chose to walk away voluntarily — blue styled box
+            st.markdown(f"""
+                <div class='end-walkaway'>
+                    <h2>You Walked Away!</h2>
+                    <p>A bold decision, {st.session_state.player_name}.</p>
+                    <p>You leave with <strong>EUR {st.session_state.money:,}</strong></p>
+                </div>
+            """, unsafe_allow_html=True)
 
     st.write("---")
 
