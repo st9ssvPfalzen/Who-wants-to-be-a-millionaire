@@ -253,8 +253,8 @@ def show_splash():
     show_host(st.session_state.joao_comment)
 
     # Centre the logo using three columns — the middle column holds the image.
-    # col widths [1, 6, 1] give the logo maximum horizontal space so it appears large.
-    col_left, col_mid, col_right = st.columns([1, 6, 1])
+    # col widths [0.2, 6, 0.2] give the logo maximum horizontal space so it appears large.
+    col_left, col_mid, col_right = st.columns([0.2, 6, 0.2])
     with col_mid:
         # Logo served via app/static/ URL — same approach as joao.png in styles.py.
         # This must be inside a raw HTML img tag; st.image() cannot use this URL path.
@@ -480,8 +480,8 @@ def show_question():
     lifeline buttons, lifeline results (if any were used), and the walk away button.
     If a correct-answer popup is pending, it is shown instead of the question.
     The playing screen uses half_logo.png instead of the full logo.
-    After 50:50 is used, eliminated answer buttons are shown dimmed in place
-    rather than removed, so the grid layout does not shift or reorder.
+    After 50:50 is used, eliminated answer buttons are replaced with dim HTML divs
+    that sit in the same grid position — so the layout never shifts or reorders.
     """
 
     # Show the prize ladder in the sidebar first
@@ -503,11 +503,11 @@ def show_question():
 
     # --- Header — half logo left, game name right ---
     # The playing screen uses half_logo.png served from app/static/ — the exact same
-    # URL approach as joao.png and logo.png. Width 150px so it is clearly visible.
+    # URL approach as joao.png and logo.png. Width 220px so it is clearly visible.
     col_logo, col_title = st.columns([1, 4])
     with col_logo:
         st.markdown(
-            "<img src='app/static/half_logo.png' style='width:150px;'>",
+            "<img src='app/static/half_logo.png' style='width:220px;'>",
             unsafe_allow_html=True
         )
     with col_title:
@@ -536,33 +536,46 @@ def show_question():
     st.write("")  # empty line for spacing
 
     # --- Answer buttons arranged in a fixed 2x2 grid ---
-    # All four buttons are always rendered to keep the grid layout stable.
-    # Buttons eliminated by 50:50 are wrapped in a div with the CSS class
-    # "answer-eliminated" which dims them and disables pointer events so they
-    # cannot be clicked. This prevents the remaining options from shifting position.
-    # remaining_options contains the options the player can still choose from.
+    # All four options are always rendered to keep the grid layout stable.
+    # Options eliminated by 50:50 are shown as dim static HTML divs that match
+    # the button shape and size — they cannot be clicked and stay in their grid
+    # position so the layout never shifts when options are removed.
+    # Active options are rendered as normal st.button() elements.
     remaining = st.session_state.remaining_options
     options   = ["A", "B", "C", "D"]
 
     col1, col2 = st.columns(2)  # two side-by-side columns for the answer buttons
 
     for i, option in enumerate(options):
-        # i % 2 == 0 is True for i=0 (A) and i=2 (C) → left column
-        # i % 2 == 0 is False for i=1 (B) and i=3 (D) → right column
-        # This gives us: A and C on the left, B and D on the right — always fixed
+        # i % 2 == 0 → left column (A and C), i % 2 != 0 → right column (B and D)
+        # This mapping is fixed regardless of which options remain after 50:50
         col = col1 if i % 2 == 0 else col2
 
         with col:
             if option not in remaining:
-                # This option was eliminated by 50:50 — wrap it in the dim CSS class.
-                # The button is still rendered so the grid does not shift, but the
-                # "answer-eliminated" wrapper makes it visually dark and unclickable.
-                st.markdown("<div class='answer-eliminated'>", unsafe_allow_html=True)
-                # key= must still be unique even for eliminated buttons
-                st.button(f"{option}: {q[option]}", use_container_width=True, key=f"ans_{option}")
-                st.markdown("</div>", unsafe_allow_html=True)
+                # Eliminated by 50:50 — render as a dim non-clickable HTML div.
+                # The div matches the button's border-radius, padding and height
+                # so the grid position is preserved and nothing shifts.
+                st.markdown(f"""
+                    <div style="
+                        background: #080e1c;
+                        color: #2a3a4a;
+                        border: 1px solid #1a2a3a;
+                        border-radius: 30px;
+                        font-size: 1rem;
+                        font-weight: bold;
+                        padding: 0.6rem 1rem;
+                        width: 100%;
+                        text-align: center;
+                        opacity: 0.4;
+                        margin-bottom: 8px;
+                        min-height: 46px;
+                        line-height: 2;
+                        box-sizing: border-box;
+                    ">{option}: {q[option]}</div>
+                """, unsafe_allow_html=True)
             else:
-                # This option is still active — render as a normal clickable button
+                # Active option — normal clickable button.
                 # key= gives each button a unique identifier so Streamlit can tell them apart.
                 if st.button(f"{option}: {q[option]}", use_container_width=True, key=f"ans_{option}"):
                     handle_answer(option, q)  # process the player's answer choice
@@ -726,9 +739,9 @@ def handle_lifeline(lifeline, q):
 def apply_fifty_fifty(q):
     """
     Removes 2 wrong answers from the screen, leaving only the correct answer
-    and 1 randomly chosen wrong answer. The eliminated options are still rendered
-    in their original grid position but visually dimmed via the answer-eliminated
-    CSS class — so the layout never shifts or reorders.
+    and 1 randomly chosen wrong answer. The eliminated options are replaced with
+    dim static HTML divs in their original grid position — so the layout never
+    shifts or reorders after 50:50 is used.
     """
     # Build a list of all wrong options (all options except the correct one)
     wrong = [opt for opt in ["A", "B", "C", "D"] if opt != q["correct"]]
@@ -740,7 +753,7 @@ def apply_fifty_fifty(q):
     eliminated = wrong[:2]
 
     # Update remaining_options to only the options NOT eliminated.
-    # show_question() uses this list to decide which buttons get the dim wrapper.
+    # show_question() uses this list to decide which options get the dim HTML div.
     st.session_state.remaining_options = [
         opt for opt in ["A", "B", "C", "D"] if opt not in eliminated
     ]
