@@ -312,8 +312,9 @@ def show_setup():
         - **Risky mode:** Only one checkpoint at 1,000 euros.
 
         **Lifelines:**
-        - **Classic:** 3 lifelines — 50:50, Ask the Audience, Phone a Friend
-        - **Risky:** 4 lifelines — same as Classic + Switch the Question
+        - **Classic mode:** 3 lifelines — 50:50, Ask the Audience, Phone a Friend
+        - **Risky mode:** 4 lifelines — same as Classic + Switch the Question
+                
         Each lifeline can only be used **once** per game.
 
         **Walk away:** Before answering any question (after Q1), you can walk away and keep your current winnings.
