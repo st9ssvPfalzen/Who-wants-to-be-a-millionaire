@@ -192,13 +192,15 @@ def init_state():
 # ─────────────────────────────────────────
 def prepare_questions(all_questions):
     """
-    Takes the full question dataset and selects 5 questions per difficulty level,
-    then returns them sorted from easiest to hardest (15 questions total).
-    This means every game is different because questions are randomly sampled.
+    Takes the full question dataset and selects 1 question per difficulty level,
+    returning a list of 15 questions sorted from easiest (level 1) to hardest (level 15).
+    The dataset has 15 difficulty levels with 50 questions each, so every game
+    is different because 1 question is randomly sampled from each level's pool.
+    This maps directly onto the prize ladder: level 1 = EUR 100, level 15 = EUR 1,000,000.
     """
 
-    # Group all questions by their difficulty value into a dictionary.
-    # Example result: {1: [q1, q2, ...], 2: [q6, q7, ...], 3: [q11, q12, ...]}
+    # Group all questions by their difficulty value (1 through 15) into a dictionary.
+    # Example result: {1: [q1, q2, ...50 questions], 2: [...], ..., 15: [...]}
     by_difficulty = {}
     for q in all_questions:
         d = q["difficulty"]
@@ -207,14 +209,16 @@ def prepare_questions(all_questions):
         by_difficulty.setdefault(d, []).append(q)
 
     selected = []
-    # Loop through difficulty levels in ascending order (1, 2, 3, ...)
+    # Loop through all 15 difficulty levels in ascending order.
+    # We pick exactly 1 question per level so the game has 15 questions
+    # that map directly onto the 15 prize ladder steps.
     for level in sorted(by_difficulty.keys()):
         pool = by_difficulty[level]
-        # random.sample picks 'n' unique items from the list without replacement.
-        # min(5, len(pool)) makes sure we don't try to pick more questions than exist.
-        selected.extend(random.sample(pool, min(5, len(pool))))
+        # random.sample picks 1 unique question randomly from the pool for this level.
+        # min(1, len(pool)) is a safety check in case a level somehow has no questions.
+        selected.extend(random.sample(pool, min(1, len(pool))))
 
-    return selected  # returns a flat list of 15 questions, easy to hard
+    return selected  # returns a flat list of 15 questions, one per difficulty level
 
 
 # ─────────────────────────────────────────
@@ -834,8 +838,10 @@ def apply_phone_friend(q):
 
 def apply_switch_question():
     """
-    Replaces the current question with a different question of the same difficulty.
+    Replaces the current question with a different question at the same difficulty level.
     Only available in Risky mode. The player gets a fresh question with no penalty.
+    With 15 difficulty levels and 50 questions per level, there are always plenty
+    of replacement candidates available at the same level.
     """
     # Get the difficulty level of the current question
     current_q  = st.session_state.questions[st.session_state.q_index]
@@ -846,22 +852,23 @@ def apply_switch_question():
     used_questions = st.session_state.questions  # the 15 questions already in this game
 
     # Find questions that:
-    # 1. Have the same difficulty level as the current question
+    # 1. Have exactly the same difficulty level as the current question
     # 2. Are not already in the current game's question list
+    # With 50 questions per level this will almost always find a replacement.
     candidates = [
         q for q in all_questions
         if q["difficulty"] == difficulty and q not in used_questions
     ]
 
     if candidates:
-        new_q = random.choice(candidates)  # pick a random replacement
-        st.session_state.questions[st.session_state.q_index] = new_q  # replace the question
+        new_q = random.choice(candidates)  # pick a random replacement from the same level
+        st.session_state.questions[st.session_state.q_index] = new_q  # replace in place
 
         # Reset 50:50 in case it was active on the old question —
         # the new question has all 4 fresh options available
         st.session_state.remaining_options = ["A", "B", "C", "D"]
     else:
-        # Edge case: no replacement found — inform the player
+        # Edge case: no replacement found at this level — extremely unlikely with 50 per level
         st.warning("No replacement question available for this difficulty level!")
 
 
