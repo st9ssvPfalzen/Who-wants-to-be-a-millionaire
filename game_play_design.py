@@ -945,7 +945,7 @@ def show_end_screen():
 
     else:
         # For wrong and walk_away screens the logo is shown at normal size
-        col_left, col_mid, col_right = st.columns([2, 1, 2])
+        col_left, col_mid, col_right = st.columns([1, 3, 1])
         with col_mid:
             st.markdown(
                 "<img src='app/static/logo.png' style='width:100%;display:block;margin:auto;'>",
