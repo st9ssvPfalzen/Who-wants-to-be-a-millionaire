@@ -99,7 +99,7 @@
         "category": "General Knowledge"
     },
     {
-        "question": "In \"Inuyasha\", what are the heros are looking to collect?",
+        "question": "In \"Inuyasha\", what are the heroes looking to collect?",
         "A": "Dragon Balls",
         "B": "Rave Stones",
         "C": "Sacred Stones",
@@ -3476,7 +3476,7 @@
         "category": "Mythology"
     },
     {
-        "question": "In the game \"Brawlhalla\", what species is the character Bödvar is?",
+        "question": "In the game \"Brawlhalla\", what species is the character Bödvar?",
         "A": "Half Human / Half Bear",
         "B": "Half Tiger /  Half Human",
         "C": "A Human",
@@ -5887,7 +5887,7 @@
     {
         "question": "Which is the largest freshwater lake in the world?",
         "A": "Caspian Sea",
-        "B": "Lake Superior ",
+        "B": "Lake Baikal",
         "C": "Lake Michigan",
         "D": "Lake Huron",
         "correct": "B",
@@ -7029,7 +7029,7 @@
         "category": "Geography"
     },
     {
-        "question": "With which country does France share its largest land border",
+        "question": "With which country does France share its largest land border?",
         "A": "Germany",
         "B": "Spain",
         "C": "Brazil",
