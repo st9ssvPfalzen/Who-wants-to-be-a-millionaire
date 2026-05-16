@@ -2,7 +2,7 @@
     {
         "question": "What battle was the longest in World War I, lasting approximately 303 days?",
         "A": "Battle of Stalingrad",
-        "B": "Battle of Verdun ",
+        "B": "Battle of Verdun",
         "C": "Battle of Passchendaele",
         "D": "Battle of Amiens",
         "correct": "B",
@@ -77,7 +77,7 @@
         "category": "Entertainment: Video Games"
     },
     {
-        "question": "What Nationality is D.Va from Overwatch?",
+        "question": "What nationality is D.Va from Overwatch?",
         "A": "Vietnamese",
         "B": "Korean",
         "C": "Chinese",
@@ -121,7 +121,7 @@
         "category": "Entertainment: Video Games"
     },
     {
-        "question": "What is the first Sony PlayStation console that runs on CD?",
+        "question": "Which Sony PlayStation console  was the first to run on CD?",
         "A": "PS",
         "B": "PS4",
         "C": "PS2",
@@ -272,7 +272,7 @@
         "correct": "B",
         "difficulty": 1,
         "source_difficulty": "easy",
-        "category": "Geography"
+        "category": "General Knowledge"
     },
     {
         "question": "Who plays the character of Po in the Kung Fu Panda movies?",
@@ -300,7 +300,7 @@
         "question": "What is the real name of the famous Spanish humorist, El Risitas?",
         "A": "Ernesto Guevara",
         "B": "Jesus Quintero",
-        "C": "Juan Joya Borga",
+        "C": "Juan Joya Borja",
         "D": "Gabriel Garcia Marquez",
         "correct": "C",
         "difficulty": 1,
@@ -345,7 +345,7 @@
         "A": "Italian",
         "B": "German",
         "C": "French",
-        "D": "Swiss",
+        "D": "Romansh",
         "correct": "B",
         "difficulty": 1,
         "source_difficulty": "easy",
@@ -418,7 +418,7 @@
         "category": "Entertainment: Film"
     },
     {
-        "question": "In The Simpsons, which war did Seymour Skinner serve in the USA Army as a Green Beret?",
+        "question": "In The Simpsons, which war did Seymour Skinner serve in the U.S. Army as a Green Beret?",
         "A": "World War 1",
         "B": "Cold War",
         "C": "Vietnam War",
@@ -429,7 +429,7 @@
         "category": "Entertainment: Cartoon & Animations"
     },
     {
-        "question": "What is the largest country in the world ?",
+        "question": "What is the largest country in the world?",
         "A": "China",
         "B": "Russian Federation",
         "C": "Brazil",
@@ -826,7 +826,7 @@
     },
     {
         "question": "When was Google founded?",
-        "A": "Feburary 7th, 2000",
+        "A": "Februrary 7th, 2000",
         "B": "September 4, 1998",
         "C": "December 12, 1989",
         "D": "October 9, 1997",
@@ -1004,7 +1004,7 @@
         "question": "George Orwell wrote this book, which is often considered a statement on government oversight.",
         "A": "The Old Man and the Sea",
         "B": "1984",
-        "C": "Catcher and the Rye",
+        "C": "The Catcher in the Rye",
         "D": "To Kill a Mockingbird",
         "correct": "B",
         "difficulty": 2,
@@ -1078,7 +1078,7 @@
         "category": "Art"
     },
     {
-        "question": "Naturally occuring uranium primarily consists of which isotope?",
+        "question": "Naturally occurring uranium primarily consists of which isotope?",
         "A": "238",
         "B": "235",
         "C": "233",
@@ -1212,7 +1212,7 @@
     {
         "question": "What is the SI unit for resistance?",
         "A": "Siemens",
-        "B": "Ampheres",
+        "B": "Amperes",
         "C": "Volts",
         "D": "Ohms",
         "correct": "D",
@@ -1309,7 +1309,7 @@
         "category": "Entertainment: Video Games"
     },
     {
-        "question": "What does the \"MP\" stand for in MP3?",
+        "question": "What does the \"MP\" stand for in MPEG?",
         "A": "Micro Point",
         "B": "Moving Picture",
         "C": "Multi Pass",
@@ -1586,7 +1586,7 @@
     {
         "question": "Who wrote the play 'Angels in America'?",
         "A": "Anthony Neilson",
-        "B": "Tony Kusher",
+        "B": "Tony Kushner",
         "C": "Tom Stoppard",
         "D": "Matthew Lopez",
         "correct": "B",
@@ -1632,7 +1632,7 @@
         "A": "Manchester United",
         "B": "Leicester City",
         "C": "Liverpool",
-        "D": "Cheslea",
+        "D": "Chelsea",
         "correct": "B",
         "difficulty": 3,
         "source_difficulty": "easy",
@@ -1716,7 +1716,7 @@
         "category": "Entertainment: Cartoon & Animations"
     },
     {
-        "question": "The “fairy” type made it’s debut in which generation of the Pokemon core series games?",
+        "question": "The “fairy” type made its debut in which generation of the Pokemon core series games?",
         "A": "7th",
         "B": "4th",
         "C": "2nd",
@@ -1850,7 +1850,7 @@
     {
         "question": "What was the official German currency until 2002?",
         "A": "Pound sterling",
-        "B": "Mark",
+        "B": "Deutsche Mark",
         "C": "Reichtoken",
         "D": "Frank",
         "correct": "B",
@@ -2453,7 +2453,7 @@
         "category": "Entertainment: Books"
     },
     {
-        "question": "Which of these are NOT a Men at Work song?",
+        "question": "Which of these is NOT a Men at Work song?",
         "A": "Who Can It Be Now?",
         "B": "Basket Case",
         "C": "Be Good Johnny",
@@ -2607,7 +2607,7 @@
         "category": "Entertainment: Film"
     },
     {
-        "question": "The Rio 2016 Summer Olympics held it's closing ceremony on what date?",
+        "question": "The Rio 2016 Summer Olympics held its closing ceremony on what date?",
         "A": "August 23",
         "B": "August 17",
         "C": "August 21",
@@ -3157,7 +3157,7 @@
         "category": "Entertainment: Music"
     },
     {
-        "question": "Which country is hosting the 2022 FIFA World Cup?",
+        "question": "Which country hosted the 2022 FIFA World Cup?",
         "A": "Vietnam",
         "B": "Bolivia",
         "C": "Uganda",
@@ -3278,7 +3278,7 @@
         "category": "Entertainment: Cartoon & Animations"
     },
     {
-        "question": "What is the name of the villian in the 2015 Russian-American Sci-Fi Movie \"Hardcore Henry\"?",
+        "question": "What is the name of the villain in the 2015 Russian-American Sci-Fi Movie \"Hardcore Henry\"?",
         "A": "Henry",
         "B": "Estelle",
         "C": "Jimmy",
@@ -3322,7 +3322,7 @@
         "category": "Geography"
     },
     {
-        "question": "Why was The Green Monster at Fenway Park was originally built?",
+        "question": "Why was the Green Monster at Fenway Park originally built?",
         "A": "To provide extra seating.",
         "B": "To display advertisements.",
         "C": "To prevent viewing games from outside the park.",
@@ -3388,7 +3388,7 @@
         "category": "Entertainment: Board Games"
     },
     {
-        "question": "What year did Gerald Ford Become President?",
+        "question": "What year did Gerald Ford become President?",
         "A": "1969",
         "B": "1977",
         "C": "1974",
@@ -3454,7 +3454,7 @@
         "category": "History"
     },
     {
-        "question": "Which of these two plates are best know for forming earthquakes and tsunami's? ",
+        "question": "Which type of plate boundary is most associated with earthquakes and tsunamis? ",
         "A": "Divergent Plate Boundaries/Convergent/Oceanic Crust",
         "B": "Oceanic & Continental Crust/Transform Plate Boundaries",
         "C": "Transform Plate Boundaries/Divergent Plate Boundaries",
@@ -3729,7 +3729,7 @@
         "category": "Entertainment: Video Games"
     },
     {
-        "question": "Which English county will you find the University of East Anglia?",
+        "question": "In which English county will you find the University of East Anglia?",
         "A": "Essex",
         "B": "Cambridgeshire",
         "C": "Suffolk",
@@ -3777,7 +3777,7 @@
         "A": "Program And Control Man",
         "B": "Political Action Committee Man",
         "C": "Physics & Astronomy Classification Man",
-        "D": "Postgraduate Aplications Centre Man",
+        "D": "Postgraduate Applications Centre Man",
         "correct": "A",
         "difficulty": 7,
         "source_difficulty": "medium",
@@ -4213,8 +4213,8 @@
         "category": "History"
     },
     {
-        "question": "Who was the topscorer for England national football team?",
-        "A": "Wayne Rooney",
+        "question": "Who is the topscorer for England national football team?",
+        "A": "Harry Kane",
         "B": "Steven Gerrard",
         "C": "Michael Owen",
         "D": "David Beckham",
@@ -4236,9 +4236,9 @@
     },
     {
         "question": "What city  has the busiest airport in the world?",
-        "A": "Tokyo,Japan",
+        "A": "Tokyo, Japan",
         "B": "Atlanta, Georgia USA",
-        "C": "Chicago,Illinois ISA",
+        "C": "Chicago, Illinois USA",
         "D": "London, England",
         "correct": "B",
         "difficulty": 8,
@@ -4367,7 +4367,7 @@
         "category": "History"
     },
     {
-        "question": "According to Japanese folklore, what is the favorite food of the Kappa.",
+        "question": "According to Japanese folklore, what is the favorite food of the Kappa?",
         "A": "Cucumbers",
         "B": "Soba",
         "C": "Nasu",
@@ -5885,7 +5885,7 @@
         "category": "Science & Nature"
     },
     {
-        "question": "Which is the largest freshwater lake in the world?",
+        "question": "Which is the largest freshwater lake in the world by volume?",
         "A": "Caspian Sea",
         "B": "Lake Baikal",
         "C": "Lake Michigan",
@@ -6281,7 +6281,7 @@
         "category": "Science & Nature"
     },
     {
-        "question": "What is the name of rocky region that spans most of eastern Canada?",
+        "question": "What is the name of the rocky region that spans most of eastern Canada?",
         "A": "Rocky Mountains",
         "B": "Appalachian Mountains",
         "C": "Canadian Shield",
@@ -6380,7 +6380,7 @@
         "category": "Entertainment: Video Games"
     },
     {
-        "question": "What common name is given to the medial condition, tibial stress syndrome (MTSS)?",
+        "question": "What common name is given to the medical condition, tibial stress syndrome (MTSS)?",
         "A": "Housemaid's Knee",
         "B": "Shin Splints",
         "C": "Carpal Tunnel",
@@ -6523,7 +6523,7 @@
         "category": "Entertainment: Japanese Anime & Manga"
     },
     {
-        "question": "Who was the Author of the manga Monster Hunter Orage?",
+        "question": "Who was the author of the manga Monster Hunter Orage?",
         "A": "Hirohiko Araki",
         "B": "Keiichi Hikami",
         "C": "Shin Yamamoto",
@@ -6743,7 +6743,7 @@
         "category": "Entertainment: Music"
     },
     {
-        "question": "Who wrote the lyrics for Leonard Bernstein's 1957 Brodway musical West Side Story?",
+        "question": "Who wrote the lyrics for Leonard Bernstein's 1957 Broadway musical West Side Story?",
         "A": "Himself",
         "B": "Oscar Hammerstein",
         "C": "Richard Rodgers",
@@ -7011,7 +7011,7 @@
         "A": "Tom Cruise",
         "B": "Brendon Urie",
         "C": "Dallon Weekes",
-        "D": "Ed Sheeren",
+        "D": "Ed Sheeran",
         "correct": "B",
         "difficulty": 13,
         "source_difficulty": "hard",
@@ -7107,7 +7107,7 @@
     },
     {
         "question": "If you planted the seeds of Quercus robur what would grow?",
-        "A": "Vegtables",
+        "A": "Vegetables",
         "B": "Flowers",
         "C": "Grains",
         "D": "Trees",
@@ -7154,7 +7154,7 @@
         "A": "I am suffering, please help me.",
         "B": "I am in great pain, please help me.",
         "C": "I pray that my life ends soon.",
-        "D": "Lets get this party started!",
+        "D": "Let's get this party started!",
         "correct": "B",
         "difficulty": 14,
         "source_difficulty": "hard",
@@ -7176,7 +7176,7 @@
         "A": "Wizard",
         "B": "Warlock",
         "C": "Cleric",
-        "D": "Sorceror",
+        "D": "Sorcerer",
         "correct": "B",
         "difficulty": 14,
         "source_difficulty": "hard",
@@ -7525,7 +7525,7 @@
     },
     {
         "question": "Which game in the \"Dark Souls\" series does the player play as the \"Ashen One\"?",
-        "A": "Demon Souls",
+        "A": "Demon's Souls",
         "B": "Bloodborne",
         "C": "Dark Souls III",
         "D": "Dark Souls I",
@@ -7568,7 +7568,7 @@
         "category": "Entertainment: Music"
     },
     {
-        "question": "What animal is on Link's pajamas in The Legend of Zelda: The Wind Waker?",
+        "question": "What animal is on Link's pyjamas in The Legend of Zelda: The Wind Waker?",
         "A": "Crawfish",
         "B": "Salmon",
         "C": "Lobster",
@@ -7931,7 +7931,7 @@
         "category": "Science: Computers"
     },
     {
-        "question": "What was the Canada's first capital?",
+        "question": "What was Canada's first capital?",
         "A": "Montreal",
         "B": "Kingston",
         "C": "Ottawa",
@@ -8109,8 +8109,8 @@
     {
         "question": "In the MMO RPG \"Realm of the Mad God\", what dungeon is widely considered to be the most difficult?",
         "A": "Snake Pit",
-        "B": "The Shatter's",
-        "C": "The Tomb of the Acient's",
+        "B": "The Shatters",
+        "C": "The Tomb of the Acients",
         "D": "The Puppet Master's Theater",
         "correct": "B",
         "difficulty": 15,
