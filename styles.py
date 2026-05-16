@@ -72,6 +72,22 @@ def inject_css():
         transform: none !important;
     }
 
+    /* ── Eliminated answer buttons — shown after 50:50 removes two wrong options ── */
+    /* These are dimmer than normal buttons but not as dark as used lifelines,      */
+    /* so the player can still see which options were removed and where they were.   */
+    /* The button stays in its grid position so the layout does not jump around.    */
+    .answer-eliminated .stButton > button {
+        background: #080e1c !important;          /* dark but not black — visibly different */
+        color: #2a3a4a !important;               /* dim text, clearly not selectable */
+        border: 1px solid #1a2a3a !important;    /* faint border, no glow */
+        opacity: 0.4 !important;                 /* noticeably faded */
+        text-shadow: none !important;
+        box-shadow: none !important;
+        cursor: default !important;              /* normal cursor — not a hand or not-allowed */
+        transform: none !important;
+        pointer-events: none;                    /* prevents any click or hover interaction */
+    }
+
     /* ── Question box ── */
     .question-box {
         background: linear-gradient(180deg, #0f2347 0%, #071428 100%);
@@ -237,7 +253,7 @@ def inject_css():
     /* ── Money rain animation — shown on the win screen instead of balloons ── */
     /* The bills are rendered as emoji characters falling from the top of the screen. */
     /* Each bill is absolutely positioned and animated with a unique delay and speed */
-    /* so they fall at different times, creating a natural rain effect. */
+    /* so they fall at different times, creating a natural rain effect.              */
     .money-rain {
         position: fixed;
         top: 0;
@@ -256,7 +272,7 @@ def inject_css():
         opacity: 0.9;
     }
     @keyframes fall {
-        0%   { transform: translateY(0) rotate(0deg);   opacity: 0.9; }
+        0%   { transform: translateY(0) rotate(0deg);       opacity: 0.9; }
         80%  { opacity: 0.9; }
         100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
     }
@@ -267,13 +283,13 @@ def inject_css():
 
 def show_host(comment: str = ""):
     """
-    Renders Joao in the top-right corner using position:fixed CSS.
+    Renders João in the top-right corner using position:fixed CSS.
     joao.png is served from app/static/joao.png — the same URL pattern used for the logo.
-    The speech bubble is slightly larger than before so it is easier to read.
+    The speech bubble is slightly larger than the original for readability.
     """
 
     # Speech bubble — only rendered when there is a comment to show.
-    # Font size increased from 0.75rem to 0.88rem and max-width widened for readability.
+    # Font size 0.88rem and max-width 160px for comfortable reading.
     if comment:
         safe = comment.replace("'", "&#39;").replace('"', '&quot;')
         st.markdown(f"""
@@ -324,19 +340,20 @@ def show_host(comment: str = ""):
 def show_money_rain():
     """
     Renders an animated rain of money bill emoji falling down the screen.
+    Used on the win screen instead of st.balloons() to match the game theme.
     Each bill gets a random horizontal position, fall duration, and start delay
     so the effect looks natural rather than uniform.
     Bills use the euro banknote emoji which is green and universally supported.
     """
 
-    # Generate 40 bills with randomised position, speed and delay.
-    # We build the HTML for each bill as a separate div and inject them all at once.
     import random as _random
 
+    # Generate 40 bills with randomised position, speed and delay.
+    # We build the HTML for each bill as a separate div and inject them all at once.
     bills_html = ""
     for _ in range(40):
         # Random horizontal position across the full screen width
-        left    = _random.randint(0, 95)       # percent
+        left     = _random.randint(0, 95)        # percent
         # Fall duration between 2 and 5 seconds — mix of fast and slow bills
         duration = _random.uniform(2.0, 5.0)
         # Start delay up to 3 seconds so bills don't all appear at once
