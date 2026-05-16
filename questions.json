@@ -78,7 +78,7 @@
     },
     {
         "question": "What Nationality is D.Va from Overwatch?",
-        "A": "Vietnamese ",
+        "A": "Vietnamese",
         "B": "Korean",
         "C": "Chinese",
         "D": "Japanese",
@@ -135,7 +135,7 @@
         "question": "Which famous military commander marched an army, which included war elephants, over the Alps during the Second Punic War?",
         "A": "Tiberius",
         "B": "Hannibal",
-        "C": "Garmanicus",
+        "C": "Germanicus",
         "D": "Alexander the Great",
         "correct": "B",
         "difficulty": 1,
@@ -297,7 +297,7 @@
         "category": "Entertainment: Television"
     },
     {
-        "question": "What is the real name of the famous spanish humorist, El Risitas?",
+        "question": "What is the real name of the famous Spanish humorist, El Risitas?",
         "A": "Ernesto Guevara",
         "B": "Jesus Quintero",
         "C": "Juan Joya Borga",
@@ -682,7 +682,7 @@
         "category": "Entertainment: Cartoon & Animations"
     },
     {
-        "question": "How many Sister Ships were related to the TItanic?",
+        "question": "How many Sister Ships were related to the Titanic?",
         "A": "2",
         "B": "4",
         "C": "3",
@@ -858,7 +858,7 @@
         "category": "Entertainment: Video Games"
     },
     {
-        "question": "Which African American is in part responsible for integrating  Major League baseball?",
+        "question": "Which African American is in part responsible for integrating Major League baseball?",
         "A": "Satchell Paige",
         "B": "Roy Campanella",
         "C": "Curt Flood",
@@ -979,7 +979,7 @@
         "category": "Entertainment: Video Games"
     },
     {
-        "question": "The Rush song \"YYZ\" derives its name from the IATA aiport identification code for which city?",
+        "question": "The Rush song \"YYZ\" derives its name from the IATA airport identification code for which city?",
         "A": "Calgary",
         "B": "Vancouver",
         "C": "Ottawa",
@@ -1914,12 +1914,12 @@
         "category": "Entertainment: Video Games"
     },
     {
-        "question": "How many planets are in our Solar System?",
-        "A": "Eight",
-        "B": "Seven",
-        "C": "Nine",
-        "D": "Ten",
-        "correct": "A",
+        "question": "Which planet in our Solar System rotates on its side, with an axial tilt of approximately 98 degrees?",
+        "A": "Neptune",
+        "B": "Saturn",
+        "C": "Venus",
+        "D": "Uranus",
+        "correct": "D",
         "difficulty": 4,
         "source_difficulty": "easy",
         "category": "Science & Nature"
@@ -2194,7 +2194,7 @@
         "B": "Android",
         "C": "iOS",
         "D": "BlackBerry",
-        "correct": "C",
+        "correct": "B",
         "difficulty": 4,
         "source_difficulty": "easy",
         "category": "Science: Computers"
@@ -2277,11 +2277,11 @@
         "category": "Entertainment: Books"
     },
     {
-        "question": "Who is the lead singer of the British pop rock band Coldplay?",
-        "A": "Will Champion",
-        "B": "Jonny Buckland",
-        "C": "Chris Martin",
-        "D": "Guy Berryman",
+        "question": "Which British rock band released the song 'Bohemian Rhapsody' in 1975?",
+        "A": "The Rolling Stones",
+        "B": "Led Zeppelin",
+        "C": "Queen",
+        "D": "The Who",
         "correct": "C",
         "difficulty": 5,
         "source_difficulty": "easy",
@@ -3334,7 +3334,7 @@
     },
     {
         "question": "Who was the first Chancellor of a united Germany in 1871? ",
-        "A": "Otto Von Bismark",
+        "A": "Otto Von Bismarck",
         "B": "Kaiser Wilhelm ",
         "C": "Robert Koch",
         "D": "Fredrick the 2nd",
@@ -4336,7 +4336,7 @@
     {
         "question": "The Andrew Lloyd Webber musical \"Cats\" is based off a book of poems written by which author?",
         "A": "Robert Frost",
-        "B": "T.S. Elliot",
+        "B": "T.S. Eliot",
         "C": "Andrew Lloyd Webber",
         "D": "Emily Dickenson",
         "correct": "B",
@@ -7283,7 +7283,7 @@
     },
     {
         "question": "The notion of a \"set that contains all sets which do not contain themselves\" is a paradoxical idea attributed to which English philosopher?",
-        "A": "Bertrand Russel",
+        "A": "Bertrand Russell",
         "B": "Alfred North Whitehead",
         "C": "John Locke",
         "D": "Francis Bacon",
@@ -7326,7 +7326,7 @@
         "category": "Entertainment: Video Games"
     },
     {
-        "question": "In linguistics, which of the following is not one of the Gricean Maxims under the Cooperative Principal?",
+        "question": "In linguistics, which of the following is not one of the Gricean Maxims under the Cooperative Principle?",
         "A": "Manner",
         "B": "Quality",
         "C": "Length",
@@ -7557,7 +7557,7 @@
         "category": "Politics"
     },
     {
-        "question": "The key of sharps does the key of G# minor contain?",
+        "question": "How many sharps does the key of G# minor contain?",
         "A": "0",
         "B": "3",
         "C": "7",
@@ -7887,7 +7887,7 @@
         "category": "Entertainment: Music"
     },
     {
-        "question": "Which of these online games was originally named LindenWorld in it's early development?",
+        "question": "Which of these online games was originally named LindenWorld in its early development?",
         "A": "ActiveWorlds",
         "B": "IMVU",
         "C": "SecondLife",
@@ -8206,7 +8206,7 @@
         "category": "History"
     },
     {
-        "question": "The Western Lowland Gorilla is scientifically know as?",
+        "question": "The Western Lowland Gorilla is scientifically known as?",
         "A": "Gorilla Gorilla Gorilla",
         "B": "Gorilla Beringei Graueri",
         "C": "Gorilla Beringei Beringei",
